@@ -1,11 +1,13 @@
 package com.marvel.app.ui.characters
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.marvel.app.R
 import com.marvel.app.base.BaseActivity
 import com.marvel.app.ui.characters.viewitems.FooterViewItem
+import com.marvel.app.ui.search.SearchActivity
 import com.marvel.app.utilities.CompletableViewState
 import com.recyclerviewbuilder.library.RecyclerViewBuilder
 import com.recyclerviewbuilder.library.RecyclerViewBuilderFactory
@@ -89,7 +91,7 @@ class CharactersActivity : BaseActivity() {
         }
 
         searchButton.setOnClickListener {
-
+            startActivity(Intent(this, SearchActivity::class.java))
         }
 
         loadingTextView.setOnClickListener {

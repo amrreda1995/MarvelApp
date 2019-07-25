@@ -1,6 +1,7 @@
 package com.marvel.app.di
 
 import com.marvel.app.ui.characters.CharactersActivity
+import com.marvel.app.ui.search.SearchActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -16,4 +17,5 @@ import javax.inject.Singleton
 interface ApplicationComponent {
 
     fun inject(target: CharactersActivity)
+    fun inject(target: SearchActivity)
 }

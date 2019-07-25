@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.character_details.CharacterDetailsActivity"></activity>
+        <activity android:name=".ui.search.SearchActivity"></activity>
+        <activity android:name=".ui.character_details.CharacterDetailsActivity" />
         <activity android:name=".ui.characters.CharactersActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
