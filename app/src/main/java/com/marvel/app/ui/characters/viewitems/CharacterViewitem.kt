@@ -1,4 +1,4 @@
-package com.marvel.app.ui.characters
+package com.marvel.app.ui.characters.viewitems
 
 import android.util.Log
 import com.marvel.app.R

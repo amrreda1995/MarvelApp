@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.marvel.app.R
 import com.marvel.app.base.BaseActivity
+import com.marvel.app.ui.characters.viewitems.FooterViewItem
 import com.marvel.app.utilities.CompletableViewState
 import com.recyclerviewbuilder.library.RecyclerViewBuilder
 import com.recyclerviewbuilder.library.RecyclerViewBuilderFactory
@@ -14,6 +15,9 @@ class CharactersActivity : BaseActivity() {
 
     private lateinit var viewModel: CharactersViewModel
     private lateinit var recyclerViewBuilder: RecyclerViewBuilder
+
+    private var pagesCount = 0
+    private var currentOffset = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         component.inject(this)
@@ -40,28 +44,34 @@ class CharactersActivity : BaseActivity() {
                 .bindViewItems(this, viewModel.characterViewItemsObserver)
                 .setPaginationEnabled(true)
                 .onPaginate {
-//                    if (currentPage == totalPages) {
-//                        recyclerViewBuilder.setPaginationEnabled(false)
-//                        return@onPaginate
-//                    }
-//
-//                    viewModel.getTopics()
+                    if (currentOffset == pagesCount - 1) {
+                        recyclerViewBuilder.setPaginationEnabled(false)
+                        recyclerViewBuilder.setFooter(null)
+                        return@onPaginate
+                    }
+
+                    viewModel.getCharacters(++currentOffset)
                 }
                 .startLoading()
     }
 
     private fun setupObservers() {
+        viewModel.pagesCount.observe(this, Observer {
+            pagesCount = it
+        })
+
         viewModel.charactersViewState.observe(this, Observer {
-            when(it) {
-                is CompletableViewState.Loading -> {
-
-                }
-
+            when (it) {
                 is CompletableViewState.Completed -> {
+                    swipeRefreshLayout.isRefreshing = false
 
+                    if (currentOffset < pagesCount) {
+                        recyclerViewBuilder.setFooter(FooterViewItem())
+                    }
                 }
 
                 is CompletableViewState.Error -> {
+                    swipeRefreshLayout.isRefreshing = false
                     loadingTextView.text = it.message.errorMessage
                 }
             }
@@ -71,7 +81,10 @@ class CharactersActivity : BaseActivity() {
     private fun setupListeners() {
         swipeRefreshLayout.setOnRefreshListener {
             if (swipeRefreshLayout.isRefreshing) {
+                pagesCount = 0
+                currentOffset = 0
 
+                viewModel.getCharacters(clearsOnSet = true)
             }
         }
 
@@ -81,12 +94,12 @@ class CharactersActivity : BaseActivity() {
 
         loadingTextView.setOnClickListener {
             startRecyclerViewBuilderLoading()
-            viewModel.getCharacters()
+            viewModel.getCharacters(clearsOnSet = true)
         }
 
         noItemsTextView.setOnClickListener {
             startRecyclerViewBuilderLoading()
-            viewModel.getCharacters()
+            viewModel.getCharacters(clearsOnSet = true)
         }
     }
 

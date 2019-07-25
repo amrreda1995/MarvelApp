@@ -1,6 +1,6 @@
 package com.marvel.app.model
 
-import com.marvel.app.ui.characters.CharacterViewItem
+import com.marvel.app.ui.characters.viewitems.CharacterViewItem
 import com.recyclerviewbuilder.library.AbstractViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 

@@ -1,6 +1,5 @@
 package com.marvel.app.di
 
-import android.content.Context
 import android.content.res.Resources
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -10,7 +9,9 @@ import com.marvel.app.BuildConfig
 import com.marvel.app.utilities.Constants
 import com.marvel.app.utilities.interceptors.CurlLoggingInterceptor
 import com.marvel.app.utilities.interceptors.ResponseLoggingInterceptor
-import com.marvel.app.utilities.managers.*
+import com.marvel.app.utilities.managers.ApiRequestManager
+import com.marvel.app.utilities.managers.ApiRequestManagerInterface
+import com.marvel.app.utilities.managers.SharedPreferencesManagerInterface
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -22,12 +23,6 @@ import javax.inject.Singleton
 
 @Module(includes = [ApplicationModule::class, SharedPreferencesModule::class])
 class NetworkModule {
-
-    @Provides
-    @Singleton
-    fun provideInternetConnectionManager(context: Context): InternetConnectionManagerInterface {
-        return InternetConnectionManager(context)
-    }
 
     @Provides
     @Singleton
@@ -44,16 +39,16 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(sharedPreferencesManager: SharedPreferencesManagerInterface): OkHttpClient {
+    fun provideOkHttpClient(): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient.Builder()
-            .connectTimeout(1, TimeUnit.MINUTES)
-            .readTimeout(1, TimeUnit.MINUTES)
-            .writeTimeout(1, TimeUnit.MINUTES)
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(1, TimeUnit.MINUTES)
+                .writeTimeout(1, TimeUnit.MINUTES)
 
         if (BuildConfig.DEBUG) {
             okHttpClientBuilder
-                .addInterceptor(CurlLoggingInterceptor())
-                .addInterceptor(ResponseLoggingInterceptor())
+                    .addInterceptor(CurlLoggingInterceptor())
+                    .addInterceptor(ResponseLoggingInterceptor())
         }
 
         return okHttpClientBuilder.build()
@@ -63,22 +58,22 @@ class NetworkModule {
     @Singleton
     fun provideGson(): Gson {
         return GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .create()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create()
     }
 
     @Provides
     @Singleton
     fun provideRetrofitClient(
-        @Named("baseURL") baseUrl: String,
-        gson: Gson,
-        httpClient: OkHttpClient
+            @Named("baseURL") baseUrl: String,
+            gson: Gson,
+            httpClient: OkHttpClient
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .client(httpClient)
-            .build()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .client(httpClient)
+                .build()
     }
 }
