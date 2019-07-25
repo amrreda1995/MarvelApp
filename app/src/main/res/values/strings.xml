@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MarvelApp</string>
+    <string name="error_while_fetching_data">Error while fetching data!</string>
+    <string name="some_error_happened">Some error happened</string>
+</resources>
