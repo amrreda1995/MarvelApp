@@ -41,9 +41,9 @@ class NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient.Builder()
-                .connectTimeout(1, TimeUnit.MINUTES)
-                .readTimeout(1, TimeUnit.MINUTES)
-                .writeTimeout(1, TimeUnit.MINUTES)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
 
         if (BuildConfig.DEBUG) {
             okHttpClientBuilder
@@ -65,9 +65,7 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofitClient(
-            @Named("baseURL") baseUrl: String,
-            gson: Gson,
-            httpClient: OkHttpClient
+            @Named("baseURL") baseUrl: String, gson: Gson, httpClient: OkHttpClient
     ): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(baseUrl)

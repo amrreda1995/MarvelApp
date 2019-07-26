@@ -14,13 +14,16 @@ class ComicsActivity : AppCompatActivity() {
 
     private lateinit var adapter: ViewPagerAdapter
 
+    private var position = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comics)
 
         viewModels = intent.extras!!.getParcelableArrayList("viewModels")
+        position = intent.extras!!.getInt("position")
 
-        numbersTextView.text = "1/${viewModels.size}"
+        numbersTextView.text = "${position + 1}/${viewModels.size}"
 
         setupViewPager()
         setupListeners()
@@ -40,6 +43,8 @@ class ComicsActivity : AppCompatActivity() {
         viewPager.offscreenPageLimit = fragmentsList.size
 
         setupViewPagerChangedPagesListener()
+
+        viewPager.currentItem = position
     }
 
     private fun addItemsToFragmentsList(fragmentsList: ArrayList<Fragment>) {

@@ -91,28 +91,29 @@ class CharacterDetailsActivity : BaseActivity() {
         }
 
         comicsRecyclerViewBuilder.setOnItemClick { itemView, model, position ->
-            startComicsActivity(comicsRecyclerView)
+            startComicsActivity(comicsRecyclerView, position)
         }
 
         eventsRecyclerViewBuilder.setOnItemClick { itemView, model, position ->
-            startComicsActivity(eventsRecyclerView)
+            startComicsActivity(eventsRecyclerView, position)
         }
 
         storiesRecyclerViewBuilder.setOnItemClick { itemView, model, position ->
-            startComicsActivity(storiesRecyclerView)
+            startComicsActivity(storiesRecyclerView, position)
         }
 
         seriesRecyclerViewBuilder.setOnItemClick { itemView, model, position ->
-            startComicsActivity(seriesRecyclerView)
+            startComicsActivity(seriesRecyclerView, position)
         }
     }
 
-    private fun startComicsActivity(recyclerView: RecyclerView) {
+    private fun startComicsActivity(recyclerView: RecyclerView, position: Int) {
         val viewModels = getViewModelsOf(recyclerView)
 
         startActivity(
                 Intent(this, ComicsActivity::class.java)
                         .putParcelableArrayListExtra("viewModels", viewModels)
+                        .putExtra("position", position)
         )
     }
 
