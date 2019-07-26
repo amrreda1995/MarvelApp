@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.marvel.app.reusable.CharactersViewModel
+import com.marvel.app.ui.character_details.CharacterDetailsActivity
 import com.marvel.app.ui.characters.viewitems.CharacterViewItemType
 import com.marvel.app.ui.characters.viewitems.FooterViewItem
 import com.marvel.app.utilities.CompletableViewState
@@ -74,6 +75,10 @@ open class CharactersBaseActivity : BaseActivity() {
     }
 
     protected open fun setupListeners() {
+        recyclerViewBuilder.setOnItemClick { itemView, model, position ->
+            startActivity(Intent(this, CharacterDetailsActivity::class.java))
+        }
+
         loadingTextView.setOnClickListener {
             startRecyclerViewBuilderLoading()
             viewModel.getCharacters(clearsOnSet = true, characterViewItemType = characterViewItemType)

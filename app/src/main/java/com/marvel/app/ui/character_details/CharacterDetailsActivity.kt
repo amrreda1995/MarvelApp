@@ -3,6 +3,7 @@ package com.marvel.app.ui.character_details
 import android.os.Bundle
 import com.marvel.app.R
 import com.marvel.app.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_character_details.*
 
 class CharacterDetailsActivity : BaseActivity() {
 
@@ -10,5 +11,13 @@ class CharacterDetailsActivity : BaseActivity() {
         component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_details)
+
+        setupListeners()
+    }
+
+    private fun setupListeners() {
+        backButton.setOnClickListener {
+            finish()
+        }
     }
 }
