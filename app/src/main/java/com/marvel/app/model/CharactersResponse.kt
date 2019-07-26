@@ -12,6 +12,7 @@ data class CharactersResponse(
 ) {
     data class Data(
         var count: Int = 0,
+        var total: Int = 0,
         var limit: Int = 0,
         var offset: Int = 0,
         var results: List<Character> = listOf()

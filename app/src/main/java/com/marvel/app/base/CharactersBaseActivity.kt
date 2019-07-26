@@ -59,8 +59,10 @@ open class CharactersBaseActivity : BaseActivity() {
             when (it) {
                 is CompletableViewState.Completed -> {
 
-                    if (currentOffset < pagesCount) {
+                    if (currentOffset + 1 < pagesCount) {
                         recyclerViewBuilder.setFooter(FooterViewItem())
+                    } else {
+                        recyclerViewBuilder.setFooter(null)
                     }
                 }
 

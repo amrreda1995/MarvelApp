@@ -29,7 +29,7 @@ class CharactersViewModel @Inject constructor(
                 },
                 onSuccess = { response, _ ->
 
-                    pagesCount.value = response.data.count
+                    pagesCount.value = response.data.total
 
                     characterViewItemsObserver.value =
                             ViewItemsObserver(

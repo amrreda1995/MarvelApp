@@ -48,8 +48,13 @@ class SearchActivity : CharactersBaseActivity() {
     private fun getCharacters() {
         currentOffset = 0
         pagesCount = 0
+        recyclerViewBuilder.setFooter(null)
         startRecyclerViewBuilderLoading()
-        viewModel.getCharacters(characterViewItemType = characterViewItemType, searchByName = searchEditText.text.toString(), clearsOnSet = true)
+        viewModel.getCharacters(
+                characterViewItemType = characterViewItemType,
+                searchByName = searchEditText.text.toString(),
+                clearsOnSet = true
+        )
     }
 
     private fun closeKeypad() {
