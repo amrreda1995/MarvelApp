@@ -9,7 +9,7 @@ import com.recyclerviewbuilder.library.BindingViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 
 class ComicViewItem(
-        private val viewModel: ComicItemViewModel
+        val viewModel: ComicItemViewModel
 ) : BindingViewItem<ViewItemRepresentable, ItemComicBinding>(R.layout.item_comic, viewModel), ComicImageInterface {
 
     private lateinit var binding: ItemComicBinding
