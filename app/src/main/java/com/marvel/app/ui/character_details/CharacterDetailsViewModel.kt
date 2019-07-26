@@ -12,6 +12,10 @@ import com.marvel.app.utilities.managers.SharedPreferencesManagerInterface
 import com.recyclerviewbuilder.library.ViewItemsObserver
 import javax.inject.Inject
 
+enum class ComicsType {
+    COMICS, EVENTS, STORIES, SERIES
+}
+
 class CharacterDetailsViewModel @Inject constructor(
         private val apiRequestManager: ApiRequestManagerInterface,
         private val sharedPreferencesManager: SharedPreferencesManagerInterface,
@@ -21,41 +25,23 @@ class CharacterDetailsViewModel @Inject constructor(
     val comicsItemsObserver = MutableLiveData<ViewItemsObserver>()
     val eventsItemsObserver = MutableLiveData<ViewItemsObserver>()
     val seriesItemsObserver = MutableLiveData<ViewItemsObserver>()
-    val storeisItemsObserver = MutableLiveData<ViewItemsObserver>()
+    val storiesItemsObserver = MutableLiveData<ViewItemsObserver>()
 
-    val comicsViewState = MutableLiveData<CompletableViewState>()
-    val eventsViewState = MutableLiveData<CompletableViewState>()
-    val seriesViewState = MutableLiveData<CompletableViewState>()
-    val storeisViewState = MutableLiveData<CompletableViewState>()
+    fun bindComics(items: List<ComicItem>, comicsType: ComicsType) {
 
-    fun getComicsBy(
-            resourceUri: String,
-            offset: Int = 0,
-            viewState: MutableLiveData<CompletableViewState>,
-            viewItemsObserver: MutableLiveData<ViewItemsObserver>,
-            clearsOnSet: Boolean = false
-    ) {
-        viewState.value = CompletableViewState.Loading
-
-        apiRequestManager.execute(
-                request = {
-                    characterDetailsRepo.getComics(resourceUri, offset)
-                },
-                onSuccess = { response, headers ->
-                    viewState.value = CompletableViewState.Completed
-                },
-                onFailure = {
-                    viewState.value = CompletableViewState.Error(it)
-                }
-        )
+        when(comicsType) {
+            ComicsType.COMICS -> comicsItemsObserver.value = getViewItemObserverOf(items)
+            ComicsType.EVENTS -> eventsItemsObserver.value = getViewItemObserverOf(items)
+            ComicsType.STORIES -> storiesItemsObserver.value = getViewItemObserverOf(items)
+            else ->  seriesItemsObserver.value = getViewItemObserverOf(items)
+        }
     }
 
-    fun bindComics(items: List<ComicItem>) {
-        comicsItemsObserver.value =
-                ViewItemsObserver(
-                        items.map {
-                            ComicItemViewModel(it, apiRequestManager, characterDetailsRepo).viewItem
-                        }.toArrayList()
-                )
+    private fun getViewItemObserverOf(items: List<ComicItem>): ViewItemsObserver {
+        return ViewItemsObserver(
+                items.map {
+                    ComicItemViewModel(it, apiRequestManager, characterDetailsRepo).viewItem
+                }.toArrayList()
+        )
     }
 }

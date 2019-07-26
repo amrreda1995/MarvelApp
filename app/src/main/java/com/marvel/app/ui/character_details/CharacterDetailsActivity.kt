@@ -37,7 +37,10 @@ class CharacterDetailsActivity : BaseActivity() {
         setupListeners()
         bindModelToViews()
 
-        viewModel.bindComics(character.comics.items)
+        viewModel.bindComics(character.comics.items, ComicsType.COMICS)
+        viewModel.bindComics(character.events.items, ComicsType.EVENTS)
+        viewModel.bindComics(character.stories.items, ComicsType.STORIES)
+        viewModel.bindComics(character.series.items, ComicsType.SERIES)
     }
 
     private fun initViewModel() {
@@ -48,6 +51,30 @@ class CharacterDetailsActivity : BaseActivity() {
         comicsRecyclerViewBuilder = RecyclerViewBuilderFactory(comicsRecyclerView)
                 .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
                 .bindViewItems(this, viewModel.comicsItemsObserver)
+                .setPaginationEnabled(true)
+                .onPaginate {
+
+                }
+
+        eventsRecyclerViewBuilder = RecyclerViewBuilderFactory(eventsRecyclerView)
+                .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
+                .bindViewItems(this, viewModel.eventsItemsObserver)
+                .setPaginationEnabled(true)
+                .onPaginate {
+
+                }
+
+        storiesRecyclerViewBuilder = RecyclerViewBuilderFactory(storiesRecyclerView)
+                .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
+                .bindViewItems(this, viewModel.storiesItemsObserver)
+                .setPaginationEnabled(true)
+                .onPaginate {
+
+                }
+
+        seriesRecyclerViewBuilder = RecyclerViewBuilderFactory(seriesRecyclerView)
+                .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
+                .bindViewItems(this, viewModel.seriesItemsObserver)
                 .setPaginationEnabled(true)
                 .onPaginate {
 
