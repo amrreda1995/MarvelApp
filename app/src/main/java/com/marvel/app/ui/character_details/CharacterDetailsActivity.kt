@@ -59,35 +59,23 @@ class CharacterDetailsActivity : BaseActivity() {
     private fun initRecyclerViewBuilders() {
         comicsRecyclerViewBuilder = RecyclerViewBuilderFactory(comicsRecyclerView)
                 .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
+                .setEmptyView(comicsNoItemsTextView)
                 .bindViewItems(this, viewModel.comicsItemsObserver)
-                .setPaginationEnabled(true)
-                .onPaginate {
-
-                }
 
         eventsRecyclerViewBuilder = RecyclerViewBuilderFactory(eventsRecyclerView)
                 .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
+                .setEmptyView(eventsNoItemsTextView)
                 .bindViewItems(this, viewModel.eventsItemsObserver)
-                .setPaginationEnabled(true)
-                .onPaginate {
-
-                }
 
         storiesRecyclerViewBuilder = RecyclerViewBuilderFactory(storiesRecyclerView)
                 .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
+                .setEmptyView(storiesNoItemsTextView)
                 .bindViewItems(this, viewModel.storiesItemsObserver)
-                .setPaginationEnabled(true)
-                .onPaginate {
-
-                }
 
         seriesRecyclerViewBuilder = RecyclerViewBuilderFactory(seriesRecyclerView)
                 .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
+                .setEmptyView(seriesNoItemsTextView)
                 .bindViewItems(this, viewModel.seriesItemsObserver)
-                .setPaginationEnabled(true)
-                .onPaginate {
-
-                }
     }
 
     private fun setupListeners() {

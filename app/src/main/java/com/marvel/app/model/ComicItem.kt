@@ -81,8 +81,12 @@ class ComicItemViewModel(
         )
     }
 
-    private fun getImage(thumbnail: Thumbnail): String {
-        return "${thumbnail.path}.${thumbnail.extension}"
+    private fun getImage(thumbnail: Thumbnail?): String {
+        thumbnail?.let {
+            return "${thumbnail.path}.${thumbnail.extension}"
+        } ?: run {
+            return "https://www.wildhareboca.com/wp-content/uploads/sites/310/2018/03/image-not-available.jpg"
+        }
     }
 
     fun setComicImageInterface(comicImageInterface: ComicImageInterface) {

@@ -1,6 +1,5 @@
 package com.marvel.app.reusable.viewitems
 
-import android.util.Log
 import androidx.databinding.ViewDataBinding
 import com.marvel.app.databinding.ItemCharacter1Binding
 import com.marvel.app.databinding.ItemCharacter2Binding
@@ -13,7 +12,7 @@ enum class CharacterViewItemType {
 }
 
 class CharacterViewItem(
-        private val viewModel: CharacterViewModel
+    private val viewModel: CharacterViewModel
 ) : BindingViewItem<ViewItemRepresentable, ViewDataBinding>(viewModel.layoutResource, viewModel) {
 
     override fun hashCode(): Int {
@@ -26,7 +25,5 @@ class CharacterViewItem(
             binding.viewModel = viewModel
         else if (binding is ItemCharacter2Binding)
             binding.viewModel = viewModel
-
-        Log.d("okkk", viewModel.character.comics.items[0].resourceURI + "what!")
     }
 }
