@@ -29,15 +29,6 @@ open class CharactersActivity : CharactersBaseActivity() {
     override fun setupListeners() {
         super.setupListeners()
 
-        swipeRefreshLayout.setOnRefreshListener {
-            if (swipeRefreshLayout.isRefreshing) {
-                pagesCount = 0
-                currentOffset = 0
-
-                viewModel.getCharacters(characterViewItemType = characterViewItemType, clearsOnSet = true)
-            }
-        }
-
         searchButton.setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))
         }

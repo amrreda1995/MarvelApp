@@ -58,7 +58,6 @@ open class CharactersBaseActivity : BaseActivity() {
         viewModel.charactersViewState.observe(this, Observer {
             when (it) {
                 is CompletableViewState.Completed -> {
-                    swipeRefreshLayout.isRefreshing = false
 
                     if (currentOffset < pagesCount) {
                         recyclerViewBuilder.setFooter(FooterViewItem())
@@ -66,7 +65,6 @@ open class CharactersBaseActivity : BaseActivity() {
                 }
 
                 is CompletableViewState.Error -> {
-                    swipeRefreshLayout.isRefreshing = false
                     loadingTextView.text = it.message.errorMessage
                 }
             }
