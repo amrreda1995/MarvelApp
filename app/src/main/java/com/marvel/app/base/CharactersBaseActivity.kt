@@ -2,10 +2,9 @@ package com.marvel.app.base
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.marvel.app.model.CharacterViewModel
 import com.marvel.app.reusable.CharactersViewModel
 import com.marvel.app.ui.character_details.CharacterDetailsActivity
 import com.marvel.app.ui.characters.viewitems.CharacterViewItemType
@@ -13,7 +12,6 @@ import com.marvel.app.ui.characters.viewitems.FooterViewItem
 import com.marvel.app.utilities.CompletableViewState
 import com.recyclerviewbuilder.library.RecyclerViewBuilder
 import com.recyclerviewbuilder.library.RecyclerViewBuilderFactory
-import kotlinx.android.synthetic.main.activity_characters.*
 import kotlinx.android.synthetic.main.layout_loading_text_view.*
 import kotlinx.android.synthetic.main.layout_no_items_text_view.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
@@ -35,20 +33,20 @@ open class CharactersBaseActivity : BaseActivity() {
 
     protected fun initRecyclerViewBuilder() {
         recyclerViewBuilder = RecyclerViewBuilderFactory(charactersRecyclerViewList)
-            .buildWithLinearLayout(isDataBindingEnabled = true)
-            .setLoadingView(loadingTextView)
-            .setEmptyView(noItemsTextView)
-            .bindViewItems(this, viewModel.characterViewItemsObserver)
-            .setPaginationEnabled(true)
-            .onPaginate {
-                if (currentOffset == pagesCount - 1) {
-                    recyclerViewBuilder.setPaginationEnabled(false)
-                    recyclerViewBuilder.setFooter(null)
-                    return@onPaginate
-                }
+                .buildWithLinearLayout(isDataBindingEnabled = true)
+                .setLoadingView(loadingTextView)
+                .setEmptyView(noItemsTextView)
+                .bindViewItems(this, viewModel.characterViewItemsObserver)
+                .setPaginationEnabled(true)
+                .onPaginate {
+                    if (currentOffset == pagesCount - 1) {
+                        recyclerViewBuilder.setPaginationEnabled(false)
+                        recyclerViewBuilder.setFooter(null)
+                        return@onPaginate
+                    }
 
-                viewModel.getCharacters(offset = ++currentOffset, characterViewItemType = characterViewItemType)
-            }
+                    viewModel.getCharacters(offset = ++currentOffset, characterViewItemType = characterViewItemType)
+                }
     }
 
     protected open fun setupObservers() {
@@ -76,7 +74,10 @@ open class CharactersBaseActivity : BaseActivity() {
 
     protected open fun setupListeners() {
         recyclerViewBuilder.setOnItemClick { itemView, model, position ->
-            startActivity(Intent(this, CharacterDetailsActivity::class.java))
+            startActivity(
+                    Intent(this, CharacterDetailsActivity::class.java)
+                            .putExtra("character", (model as CharacterViewModel).character)
+            )
         }
 
         loadingTextView.setOnClickListener {
