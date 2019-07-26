@@ -1,16 +1,26 @@
 package com.marvel.app.ui.character_details
 
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
-import com.marvel.app.R
 import com.marvel.app.base.BaseActivity
 import com.marvel.app.databinding.ActivityCharacterDetailsBinding
 import com.marvel.app.model.Character
 import com.recyclerviewbuilder.library.RecyclerViewBuilder
 import com.recyclerviewbuilder.library.RecyclerViewBuilderFactory
 import kotlinx.android.synthetic.main.activity_character_details.*
+import android.content.Intent
+import android.net.Uri
+import androidx.core.content.ContextCompat.startActivity
+import com.marvel.app.R
+import com.marvel.app.utilities.extensions.toast
+
+enum class CharacterUrlType(val value: String) {
+    DETAIL("detail"), WIKI("wiki"), COMIC_LINK("comiclink")
+}
+
 
 class CharacterDetailsActivity : BaseActivity() {
 
@@ -33,7 +43,6 @@ class CharacterDetailsActivity : BaseActivity() {
 
         initViewModel()
         initRecyclerViewBuilders()
-        setupObservers()
         setupListeners()
         bindModelToViews()
 
@@ -81,10 +90,6 @@ class CharacterDetailsActivity : BaseActivity() {
                 }
     }
 
-    private fun setupObservers() {
-
-    }
-
     private fun setupListeners() {
         backButton.setOnClickListener {
             finish()
@@ -93,5 +98,33 @@ class CharacterDetailsActivity : BaseActivity() {
 
     private fun bindModelToViews() {
         binding.character = character
+    }
+
+    fun openLink(view: View) {
+
+        when(view.id) {
+            R.id.detailsLayout -> searchOfUrlOfType(CharacterUrlType.DETAIL)
+            R.id.wikiLayout -> searchOfUrlOfType(CharacterUrlType.WIKI)
+            else -> searchOfUrlOfType(CharacterUrlType.COMIC_LINK)
+        }
+    }
+
+    private fun searchOfUrlOfType(characterUrlType: CharacterUrlType) {
+        val urlIndex = character.urls.indexOfFirst { it.type == characterUrlType.value }
+
+        if (urlIndex > -1) {
+            openLinkInBrowser(character.urls[urlIndex].url)
+        } else {
+            toast("No url found!")
+        }
+    }
+
+    private fun openLinkInBrowser(url: String) {
+        if (url.isNotEmpty()) {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(browserIntent)
+        } else {
+            toast("No url found!")
+        }
     }
 }

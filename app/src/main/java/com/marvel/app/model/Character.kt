@@ -13,6 +13,7 @@ data class Character(
         var name: String = "",
         var description: String = "",
         var thumbnail: Thumbnail = Thumbnail(),
+        var urls: List<CharacterUrl> = listOf(),
         var comics: CharacterComic = CharacterComic(),
         var events: CharacterComic = CharacterComic(),
         var series: CharacterComic = CharacterComic(),
@@ -24,6 +25,7 @@ data class Character(
             name = parcel.readString() ?: "",
             description = parcel.readString() ?: "",
             thumbnail = parcel.readParcelable(Thumbnail::class.java.classLoader),
+            urls = parcel.createTypedArrayList(CharacterUrl.CREATOR),
             comics = parcel.readParcelable(CharacterComic::class.java.classLoader),
             events = parcel.readParcelable(CharacterComic::class.java.classLoader),
             series = parcel.readParcelable(CharacterComic::class.java.classLoader),
@@ -35,6 +37,7 @@ data class Character(
         parcel.writeString(name)
         parcel.writeString(description)
         parcel.writeParcelable(thumbnail, flags)
+        parcel.writeTypedList(urls)
         parcel.writeParcelable(comics, flags)
         parcel.writeParcelable(events, flags)
         parcel.writeParcelable(series, flags)
