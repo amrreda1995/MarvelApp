@@ -3,6 +3,8 @@ package com.marvel.app.ui.character_details
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
+import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -11,10 +13,16 @@ import com.marvel.app.R
 import com.marvel.app.base.BaseActivity
 import com.marvel.app.databinding.ActivityCharacterDetailsBinding
 import com.marvel.app.model.Character
+import com.marvel.app.model.ComicItemViewModel
+import com.marvel.app.reusable.viewitems.ComicViewItem
+import com.marvel.app.ui.comic_images.ComicsActivity
+import com.marvel.app.utilities.extensions.toArrayList
 import com.marvel.app.utilities.extensions.toast
+import com.recyclerviewbuilder.library.BaseAdapterInterface
 import com.recyclerviewbuilder.library.RecyclerViewBuilder
 import com.recyclerviewbuilder.library.RecyclerViewBuilderFactory
 import kotlinx.android.synthetic.main.activity_character_details.*
+import java.util.ArrayList
 
 enum class CharacterUrlType(val value: String) {
     DETAIL("detail"), WIKI("wiki"), COMIC_LINK("comiclink")
@@ -83,20 +91,35 @@ class CharacterDetailsActivity : BaseActivity() {
         }
 
         comicsRecyclerViewBuilder.setOnItemClick { itemView, model, position ->
-
+            startComicsActivity(comicsRecyclerView)
         }
 
         eventsRecyclerViewBuilder.setOnItemClick { itemView, model, position ->
-
+            startComicsActivity(eventsRecyclerView)
         }
 
         storiesRecyclerViewBuilder.setOnItemClick { itemView, model, position ->
-
+            startComicsActivity(storiesRecyclerView)
         }
 
         seriesRecyclerViewBuilder.setOnItemClick { itemView, model, position ->
-
+            startComicsActivity(seriesRecyclerView)
         }
+    }
+
+    private fun startComicsActivity(recyclerView: RecyclerView) {
+        val viewModels = getViewModelsOf(recyclerView)
+
+        startActivity(
+                Intent(this, ComicsActivity::class.java)
+                        .putParcelableArrayListExtra("viewModels", viewModels)
+        )
+    }
+
+    private fun getViewModelsOf(recyclerView: RecyclerView): ArrayList<ComicItemViewModel> {
+        return (recyclerView.adapter as BaseAdapterInterface).viewItemsArrayList.map {
+            (it as ComicViewItem).viewModel
+        }.toArrayList()
     }
 
     private fun bindModelToViews() {
@@ -106,13 +129,13 @@ class CharacterDetailsActivity : BaseActivity() {
     fun openLink(view: View) {
 
         when (view.id) {
-            R.id.detailsLayout -> searchOfUrlOfType(CharacterUrlType.DETAIL)
-            R.id.wikiLayout -> searchOfUrlOfType(CharacterUrlType.WIKI)
-            else -> searchOfUrlOfType(CharacterUrlType.COMIC_LINK)
+            R.id.detailsLayout -> searchForUrlOfType(CharacterUrlType.DETAIL)
+            R.id.wikiLayout -> searchForUrlOfType(CharacterUrlType.WIKI)
+            else -> searchForUrlOfType(CharacterUrlType.COMIC_LINK)
         }
     }
 
-    private fun searchOfUrlOfType(characterUrlType: CharacterUrlType) {
+    private fun searchForUrlOfType(characterUrlType: CharacterUrlType) {
         val urlIndex = character.urls.indexOfFirst { it.type == characterUrlType.value }
 
         if (urlIndex > -1) {

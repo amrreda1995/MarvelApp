@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.marvel.app.R
 import com.marvel.app.model.Comic
+import com.marvel.app.model.ComicItemViewModel
 import com.marvel.app.utilities.extensions.load
-import kotlinx.android.synthetic.main.fragment_comic_image.view.*
+import kotlinx.android.synthetic.main.fragment_comic.view.*
 
-class ComicImageFragment : Fragment() {
+class ComicFragment : Fragment() {
 
     private lateinit var rootView: View
 
@@ -20,16 +21,16 @@ class ComicImageFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
 
-        rootView = inflater.inflate(R.layout.fragment_comic_image, container, false)
+        rootView = inflater.inflate(R.layout.fragment_comic, container, false)
 
         val bundle = arguments
 
-//        val comic = bundle?.getParcelable<Comic>("comic")
-//
-//        comic?.let {
-//            rootView.comicImage.load("${comic.thumbnail.path}.${comic.thumbnail.extension}")
-//            rootView.titleTextView.text = comic.title
-//        }
+        val viewModel = bundle?.getParcelable<ComicItemViewModel>("viewModel")
+
+        viewModel?.let {
+            rootView.comicImage.load(viewModel.comicImage)
+            rootView.titleTextView.text = viewModel.comicItem.name
+        }
 
         return rootView
     }

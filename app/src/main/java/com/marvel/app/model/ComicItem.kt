@@ -2,17 +2,10 @@ package com.marvel.app.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.google.gson.annotations.SerializedName
-import com.marvel.app.repositories.CharacterDetailsRepoInterface
 import com.marvel.app.reusable.viewitems.ComicViewItem
-import com.marvel.app.utilities.CompletableViewState
-import com.marvel.app.utilities.extensions.toArrayList
-import com.marvel.app.utilities.managers.ApiRequestManagerInterface
 import com.recyclerviewbuilder.library.AbstractViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
-import com.recyclerviewbuilder.library.ViewItemsObserver
 
 data class ComicItem(
         var name: String = "",
@@ -45,10 +38,34 @@ data class ComicItem(
     }
 }
 
-class ComicItemViewModel(val comicItem: ComicItem) : ViewItemRepresentable {
+class ComicItemViewModel(
+        val comicItem: ComicItem, var comicImage: String = ""
+) : ViewItemRepresentable, Parcelable {
 
-    var comicImage = ""
+    constructor(parcel: Parcel) : this(
+            comicItem = parcel.readParcelable(ComicItem::class.java.classLoader),
+            comicImage = parcel.readString() ?: ""
+    )
 
     override val viewItem: AbstractViewItem<ViewItemRepresentable>
         get() = ComicViewItem(this)
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeParcelable(comicItem, flags)
+        parcel.writeString(comicImage)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<ComicItemViewModel> {
+        override fun createFromParcel(parcel: Parcel): ComicItemViewModel {
+            return ComicItemViewModel(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ComicItemViewModel?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
