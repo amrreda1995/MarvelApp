@@ -2,6 +2,7 @@ package com.marvel.app.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.annotations.SerializedName
 import com.marvel.app.repositories.CharacterDetailsRepoInterface
