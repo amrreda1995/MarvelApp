@@ -1,4 +1,4 @@
-package com.marvel.app.reusable
+package com.marvel.app.reusable.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

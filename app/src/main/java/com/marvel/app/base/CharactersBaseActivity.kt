@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.marvel.app.model.CharacterViewModel
-import com.marvel.app.reusable.CharactersViewModel
+import com.marvel.app.reusable.viewmodels.CharactersViewModel
 import com.marvel.app.ui.character_details.CharacterDetailsActivity
 import com.marvel.app.ui.characters.viewitems.CharacterViewItemType
 import com.marvel.app.ui.characters.viewitems.FooterViewItem

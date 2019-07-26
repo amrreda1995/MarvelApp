@@ -73,14 +73,14 @@
                     android:layout_marginTop="4dp"
                     android:text="@{character.name}"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="18dp"
                     android:text="Description"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp" />
@@ -92,13 +92,13 @@
                     android:layout_marginTop="4dp"
                     android:text="@{character.description}"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="18dp"
                     android:text="Comics"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp" />
@@ -169,6 +169,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/detailsLayout"
+                    android:onClick="openLinks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp">
@@ -202,6 +203,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/wikiLayout"
+                    android:onClick="openLinks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp">
@@ -236,6 +238,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/comicLinkLayout"
                     android:layout_width="match_parent"
+                    android:onClick="openLinks"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="100dp">
