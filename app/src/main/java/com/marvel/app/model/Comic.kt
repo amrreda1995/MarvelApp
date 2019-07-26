@@ -10,7 +10,7 @@ data class Comic(
         var id: Int = 0,
         var title: String = "",
         var description: String = "",
-        var thumbnail: Thumbnail = Thumbnail(),
+        var thumbnail: Thumbnail? = Thumbnail(),
         var images: List<Thumbnail> = listOf()
 ) : Parcelable {
 

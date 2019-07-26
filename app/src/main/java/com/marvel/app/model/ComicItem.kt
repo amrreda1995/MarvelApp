@@ -13,10 +13,6 @@ import com.recyclerviewbuilder.library.AbstractViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 import com.recyclerviewbuilder.library.ViewItemsObserver
 
-interface ComicImageInterface {
-    fun setComicImage(imageUrl: String)
-}
-
 data class ComicItem(
         var name: String = "",
         @SerializedName("resourceURI")
@@ -48,54 +44,10 @@ data class ComicItem(
     }
 }
 
-class ComicItemViewModel(
-        val comicItem: ComicItem,
-        private val apiRequestManager: ApiRequestManagerInterface,
-        private val characterDetailsRepo: CharacterDetailsRepoInterface
-) : ViewItemRepresentable {
-
-    private lateinit var comicImageInterface: ComicImageInterface
+class ComicItemViewModel(val comicItem: ComicItem) : ViewItemRepresentable {
 
     var comicImage = ""
 
-    var comic = Comic()
-
     override val viewItem: AbstractViewItem<ViewItemRepresentable>
         get() = ComicViewItem(this)
-
-    fun getComicsBy(
-            resourceUri: String,
-            offset: Int = 0
-    ) {
-
-        apiRequestManager.execute(
-                request = {
-                    characterDetailsRepo.getComics(resourceUri, offset)
-                },
-                onSuccess = { response, headers ->
-                    if (response.data.results.isNotEmpty()) {
-                        comicImage = getImage(response.data.results[0].thumbnail)
-
-                        comicImageInterface.setComicImage(comicImage)
-                    }
-
-                    comic.title = comicItem.name
-                    comic.thumbnail = response.data.results[0].thumbnail
-                },
-                onFailure = {
-                }
-        )
-    }
-
-    private fun getImage(thumbnail: Thumbnail?): String {
-        thumbnail?.let {
-            return "${thumbnail.path}.${thumbnail.extension}"
-        } ?: run {
-            return "https://www.wildhareboca.com/wp-content/uploads/sites/310/2018/03/image-not-available.jpg"
-        }
-    }
-
-    fun setComicImageInterface(comicImageInterface: ComicImageInterface) {
-        this.comicImageInterface = comicImageInterface
-    }
 }

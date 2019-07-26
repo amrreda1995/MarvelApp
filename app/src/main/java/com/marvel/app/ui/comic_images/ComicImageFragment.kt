@@ -24,12 +24,12 @@ class ComicImageFragment : Fragment() {
 
         val bundle = arguments
 
-        val comic = bundle?.getParcelable<Comic>("comic")
-
-        comic?.let {
-            rootView.comicImage.load("${comic.thumbnail.path}.${comic.thumbnail.extension}")
-            rootView.titleTextView.text = comic.title
-        }
+//        val comic = bundle?.getParcelable<Comic>("comic")
+//
+//        comic?.let {
+//            rootView.comicImage.load("${comic.thumbnail.path}.${comic.thumbnail.extension}")
+//            rootView.titleTextView.text = comic.title
+//        }
 
         return rootView
     }

@@ -16,27 +16,25 @@ interface CharacterDetailsApi {
             @Url resourceUri: String,
             @Query("ts") ts: String,
             @Query("apikey") apikey: String,
-            @Query("hash") hash: String,
-            @Query("offset") offset: Int
+            @Query("hash") hash: String
     ): Response<ComicsResponse>
 }
 
 interface CharacterDetailsRepoInterface {
 
-    suspend fun getComics(@Url resourceUri: String, offset: Int): Response<ComicsResponse>
+    suspend fun getComics(@Url resourceUri: String): Response<ComicsResponse>
 }
 
 class CharacterDetailsRepo @Inject constructor(private val retrofit: Retrofit) : CharacterDetailsRepoInterface {
 
-    override suspend fun getComics(resourceUri: String, offset: Int): Response<ComicsResponse> {
+    override suspend fun getComics(resourceUri: String): Response<ComicsResponse> {
         val api = retrofit.create(CharacterDetailsApi::class.java)
 
         return api.getComics(
                 resourceUri,
                 BuildConfig.TS,
                 BuildConfig.MARVEL_API_PUBLIC_KEY,
-                BuildConfig.HASH_KEY,
-                offset
+                BuildConfig.HASH_KEY
         )
     }
 }

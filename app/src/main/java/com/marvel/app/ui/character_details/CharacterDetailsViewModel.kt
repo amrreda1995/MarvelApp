@@ -5,11 +5,13 @@ import androidx.lifecycle.ViewModel
 import com.marvel.app.model.ComicItem
 import com.marvel.app.model.ComicItemViewModel
 import com.marvel.app.repositories.CharacterDetailsRepoInterface
-import com.marvel.app.utilities.CompletableViewState
-import com.marvel.app.utilities.extensions.toArrayList
 import com.marvel.app.utilities.managers.ApiRequestManagerInterface
 import com.marvel.app.utilities.managers.SharedPreferencesManagerInterface
 import com.recyclerviewbuilder.library.ViewItemsObserver
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 enum class ComicsType {
@@ -18,7 +20,6 @@ enum class ComicsType {
 
 class CharacterDetailsViewModel @Inject constructor(
         private val apiRequestManager: ApiRequestManagerInterface,
-        private val sharedPreferencesManager: SharedPreferencesManagerInterface,
         private val characterDetailsRepo: CharacterDetailsRepoInterface
 ) : ViewModel() {
 
@@ -27,21 +28,42 @@ class CharacterDetailsViewModel @Inject constructor(
     val seriesItemsObserver = MutableLiveData<ViewItemsObserver>()
     val storiesItemsObserver = MutableLiveData<ViewItemsObserver>()
 
-    fun bindComics(items: List<ComicItem>, comicsType: ComicsType) {
+    fun bindComicsOf(items: List<ComicItem>, withComicsItemsObserver: MutableLiveData<ViewItemsObserver>) {
 
-        when(comicsType) {
-            ComicsType.COMICS -> comicsItemsObserver.value = getViewItemObserverOf(items)
-            ComicsType.EVENTS -> eventsItemsObserver.value = getViewItemObserverOf(items)
-            ComicsType.STORIES -> storiesItemsObserver.value = getViewItemObserverOf(items)
-            else ->  seriesItemsObserver.value = getViewItemObserverOf(items)
+        CoroutineScope(Dispatchers.IO).launch {
+
+            if (items.isNotEmpty()) {
+                items.forEach {
+                    getComicDataBy(it, withComicsItemsObserver)
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    withComicsItemsObserver.value = ViewItemsObserver()
+                }
+            }
         }
     }
 
-    private fun getViewItemObserverOf(items: List<ComicItem>): ViewItemsObserver {
-        return ViewItemsObserver(
-                items.map {
-                    ComicItemViewModel(it, apiRequestManager, characterDetailsRepo).viewItem
-                }.toArrayList()
+    private suspend fun getComicDataBy(comicItem: ComicItem, withComicsItemsObserver: MutableLiveData<ViewItemsObserver>) {
+
+        apiRequestManager.execute(
+                request = {
+                    characterDetailsRepo.getComics(comicItem.resourceURI)
+                },
+                onSuccess = { response, headers ->
+                    val comicItemViewModel = ComicItemViewModel(comicItem)
+
+                    if (response.data.results.isNotEmpty()) {
+                        response.data.results[0].thumbnail?.let {
+                            comicItemViewModel.comicImage =
+                                    "${it.path}.${it.extension}"
+                        } ?: run {
+                            comicItemViewModel.comicImage = "https://www.wildhareboca.com/wp-content/uploads/sites/310/2018/03/image-not-available.jpg"
+                        }
+                    }
+
+                    withComicsItemsObserver.value = ViewItemsObserver(arrayListOf(comicItemViewModel.viewItem))
+                }
         )
     }
 }

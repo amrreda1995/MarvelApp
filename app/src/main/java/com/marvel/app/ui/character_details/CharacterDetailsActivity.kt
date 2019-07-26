@@ -11,10 +11,6 @@ import com.marvel.app.R
 import com.marvel.app.base.BaseActivity
 import com.marvel.app.databinding.ActivityCharacterDetailsBinding
 import com.marvel.app.model.Character
-import com.marvel.app.model.Thumbnail
-import com.marvel.app.reusable.viewitems.ComicViewItem
-import com.marvel.app.ui.comic_images.ComicImagesActivity
-import com.marvel.app.utilities.extensions.toArrayList
 import com.marvel.app.utilities.extensions.toast
 import com.recyclerviewbuilder.library.RecyclerViewBuilder
 import com.recyclerviewbuilder.library.RecyclerViewBuilderFactory
@@ -49,10 +45,10 @@ class CharacterDetailsActivity : BaseActivity() {
         setupListeners()
         bindModelToViews()
 
-        viewModel.bindComics(character.comics.items, ComicsType.COMICS)
-        viewModel.bindComics(character.events.items, ComicsType.EVENTS)
-        viewModel.bindComics(character.stories.items, ComicsType.STORIES)
-        viewModel.bindComics(character.series.items, ComicsType.SERIES)
+        viewModel.bindComicsOf(character.comics.items, withComicsItemsObserver = viewModel.comicsItemsObserver)
+        viewModel.bindComicsOf(character.events.items, withComicsItemsObserver = viewModel.eventsItemsObserver)
+        viewModel.bindComicsOf(character.stories.items, withComicsItemsObserver = viewModel.storiesItemsObserver)
+        viewModel.bindComicsOf(character.series.items, withComicsItemsObserver = viewModel.seriesItemsObserver)
     }
 
     private fun initViewModel() {
@@ -87,14 +83,7 @@ class CharacterDetailsActivity : BaseActivity() {
         }
 
         comicsRecyclerViewBuilder.setOnItemClick { itemView, model, position ->
-            val comicsList = viewModel.comicsItemsObserver.value?.viewItemsArrayList?.map {
-                (it as ComicViewItem).viewModel.comic
-            }?.toArrayList()
 
-            startActivity(
-                    Intent(this, ComicImagesActivity::class.java)
-                            .putParcelableArrayListExtra("comics", comicsList)
-            )
         }
 
         eventsRecyclerViewBuilder.setOnItemClick { itemView, model, position ->
