@@ -18,22 +18,41 @@ interface CharactersApi {
             @Query("hash") hash: String,
             @Query("offset") offset: Int
     ): Response<CharactersResponse>
+
+    @GET(Constants.Endpoints.characters)
+    suspend fun getCharacters(
+            @Query("ts") ts: String,
+            @Query("apikey") apikey: String,
+            @Query("hash") hash: String,
+            @Query("name") searchByName: String,
+            @Query("offset") offset: Int
+    ): Response<CharactersResponse>
 }
 
 interface CharactersRepoInterface {
-    suspend fun getCharacters(offset: Int): Response<CharactersResponse>
+    suspend fun getCharacters(searchByName: String? = null, offset: Int): Response<CharactersResponse>
 }
 
 class CharactersRepo @Inject constructor(private val retrofit: Retrofit) : CharactersRepoInterface {
 
-    override suspend fun getCharacters(offset: Int): Response<CharactersResponse> {
+    override suspend fun getCharacters(searchByName: String?, offset: Int): Response<CharactersResponse> {
         val api = retrofit.create(CharactersApi::class.java)
 
-        return api.getCharacters(
-                BuildConfig.TS,
-                BuildConfig.MARVEL_API_PUBLIC_KEY,
-                BuildConfig.HASH_KEY,
-                offset
-        )
+        searchByName?.let {
+            return api.getCharacters(
+                    BuildConfig.TS,
+                    BuildConfig.MARVEL_API_PUBLIC_KEY,
+                    BuildConfig.HASH_KEY,
+                    it,
+                    offset
+            )
+        } ?: run {
+            return api.getCharacters(
+                    BuildConfig.TS,
+                    BuildConfig.MARVEL_API_PUBLIC_KEY,
+                    BuildConfig.HASH_KEY,
+                    offset
+            )
+        }
     }
 }

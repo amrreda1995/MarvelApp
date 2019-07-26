@@ -2,7 +2,7 @@ package com.marvel.app.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.marvel.app.ui.characters.CharactersViewModel
+import com.marvel.app.reusable.CharactersViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

@@ -15,9 +15,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.search.SearchActivity"></activity>
-        <activity android:name=".ui.character_details.CharacterDetailsActivity" />
-        <activity android:name=".ui.characters.CharactersActivity">
+
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.character_details.CharacterDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.characters.CharactersActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

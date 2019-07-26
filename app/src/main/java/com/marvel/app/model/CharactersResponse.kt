@@ -1,6 +1,8 @@
 package com.marvel.app.model
 
+import com.marvel.app.R
 import com.marvel.app.ui.characters.viewitems.CharacterViewItem
+import com.marvel.app.ui.characters.viewitems.CharacterViewItemType
 import com.recyclerviewbuilder.library.AbstractViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 
@@ -54,7 +56,13 @@ data class CharactersResponse(
     }
 }
 
-class CharacterViewModel(val character: CharactersResponse.Data.Character): ViewItemRepresentable {
+class CharacterViewModel(val character: CharactersResponse.Data.Character, private val characterViewItemType: CharacterViewItemType): ViewItemRepresentable {
+
+    val layoutResource = if (characterViewItemType == CharacterViewItemType.VIEW_TYPE_1) {
+        R.layout.item_character_1
+    } else {
+        R.layout.item_character_2
+    }
 
     val characterImage = "${character.thumbnail.path}.${character.thumbnail.extension}"
 

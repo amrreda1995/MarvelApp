@@ -1,9 +1,10 @@
-package com.marvel.app.ui.characters
+package com.marvel.app.reusable
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.marvel.app.model.CharacterViewModel
 import com.marvel.app.repositories.CharactersRepoInterface
+import com.marvel.app.ui.characters.viewitems.CharacterViewItemType
 import com.marvel.app.utilities.CompletableViewState
 import com.marvel.app.utilities.extensions.toArrayList
 import com.marvel.app.utilities.managers.ApiRequestManagerInterface
@@ -21,10 +22,10 @@ class CharactersViewModel @Inject constructor(
     val charactersViewState = MutableLiveData<CompletableViewState>()
     val pagesCount = MutableLiveData<Int>()
 
-    fun getCharacters(offset: Int = 0, clearsOnSet: Boolean = false) {
+    fun getCharacters(searchByName: String? = null, offset: Int = 0, clearsOnSet: Boolean = false, characterViewItemType: CharacterViewItemType) {
         apiRequestManager.execute(
                 request = {
-                    charactersRepo.getCharacters(offset)
+                    charactersRepo.getCharacters(searchByName, offset)
                 },
                 onSuccess = { response, _ ->
 
@@ -33,7 +34,7 @@ class CharactersViewModel @Inject constructor(
                     characterViewItemsObserver.value =
                             ViewItemsObserver(
                                     response.data.results.map {
-                                        CharacterViewModel(it).viewItem
+                                        CharacterViewModel(it, characterViewItemType).viewItem
                                     }.toArrayList(),
                                     clearsOnSet = clearsOnSet
                             )

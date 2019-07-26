@@ -31,7 +31,7 @@
                 android:background="#fff"
                 android:drawableLeft="@drawable/baseline_search_black_24"
                 android:drawablePadding="12dp"
-                android:hint="Search"
+                android:hint="Search.."
                 android:imeOptions="actionSearch"
                 android:paddingStart="6dp"
                 android:paddingEnd="6dp"
@@ -62,40 +62,30 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/charactersRecyclerViewList"
+    <include
+        layout="@layout/layout_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBar" />
 
-    <TextView
-        android:id="@+id/loadingTextView"
-        android:layout_width="match_parent"
+    <include
+        layout="@layout/layout_loading_text_view"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
-        android:text="Loading..."
-        android:textSize="18sp"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBar" />
 
-    <TextView
-        android:id="@+id/noItemsTextView"
+    <include
+        layout="@layout/layout_no_items_text_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
-        android:text="No characters found!"
-        android:textSize="18sp"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

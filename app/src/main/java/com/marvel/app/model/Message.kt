@@ -1,3 +1,9 @@
 package com.marvel.app.model
 
-data class Message(var errorMessage: String = "", var statusCode: Int = 0)
+import com.google.gson.annotations.SerializedName
+
+data class Message(
+        @SerializedName("status")
+        var errorMessage: String = "",
+        var statusCode: Int = 0
+)
