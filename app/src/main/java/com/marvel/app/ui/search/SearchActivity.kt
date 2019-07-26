@@ -1,11 +1,10 @@
 package com.marvel.app.ui.search
 
+import android.content.Context
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
-import com.marvel.app.R
-import com.marvel.app.base.BaseActivity
+import android.view.inputmethod.InputMethodManager
 import com.marvel.app.base.CharactersBaseActivity
-import com.marvel.app.ui.characters.CharactersActivity
 import com.marvel.app.ui.characters.viewitems.CharacterViewItemType
 import kotlinx.android.synthetic.main.activity_search.*
 
@@ -14,7 +13,7 @@ class SearchActivity : CharactersBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         component.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+        setContentView(com.marvel.app.R.layout.activity_search)
 
         characterViewItemType = CharacterViewItemType.VIEW_TYPE_2
 
@@ -28,11 +27,10 @@ class SearchActivity : CharactersBaseActivity() {
         super.setupListeners()
 
         searchEditText.setOnEditorActionListener { v, actionId, event ->
-            val bool =  if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                currentOffset = 0
-                pagesCount = 0
-                startRecyclerViewBuilderLoading()
-                viewModel.getCharacters(characterViewItemType = characterViewItemType, searchByName = searchEditText.text.toString(), clearsOnSet = true)
+            val bool = if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                getCharacters()
+                closeKeypad()
 
                 true
             } else {
@@ -41,5 +39,21 @@ class SearchActivity : CharactersBaseActivity() {
 
             bool
         }
+
+        cancelButton.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun getCharacters() {
+        currentOffset = 0
+        pagesCount = 0
+        startRecyclerViewBuilderLoading()
+        viewModel.getCharacters(characterViewItemType = characterViewItemType, searchByName = searchEditText.text.toString(), clearsOnSet = true)
+    }
+
+    private fun closeKeypad() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
 }
