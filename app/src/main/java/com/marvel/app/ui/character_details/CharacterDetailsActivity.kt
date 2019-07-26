@@ -3,10 +3,13 @@ package com.marvel.app.ui.character_details
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
 import com.marvel.app.R
 import com.marvel.app.base.BaseActivity
 import com.marvel.app.databinding.ActivityCharacterDetailsBinding
 import com.marvel.app.model.Character
+import com.recyclerviewbuilder.library.RecyclerViewBuilder
+import com.recyclerviewbuilder.library.RecyclerViewBuilderFactory
 import kotlinx.android.synthetic.main.activity_character_details.*
 
 class CharacterDetailsActivity : BaseActivity() {
@@ -16,6 +19,11 @@ class CharacterDetailsActivity : BaseActivity() {
 
     private lateinit var character: Character
 
+    private lateinit var comicsRecyclerViewBuilder: RecyclerViewBuilder
+    private lateinit var eventsRecyclerViewBuilder: RecyclerViewBuilder
+    private lateinit var seriesRecyclerViewBuilder: RecyclerViewBuilder
+    private lateinit var storiesRecyclerViewBuilder: RecyclerViewBuilder
+
     override fun onCreate(savedInstanceState: Bundle?) {
         component.inject(this)
         super.onCreate(savedInstanceState)
@@ -24,18 +32,26 @@ class CharacterDetailsActivity : BaseActivity() {
         character = intent.extras!!.getParcelable("character")
 
         initViewModel()
-        initRecyclerViewBuilder()
+        initRecyclerViewBuilders()
         setupObservers()
         setupListeners()
         bindModelToViews()
+
+        viewModel.bindComics(character.comics.items)
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this, viewModelFactory)[CharacterDetailsViewModel::class.java]
     }
 
-    private fun initRecyclerViewBuilder() {
+    private fun initRecyclerViewBuilders() {
+        comicsRecyclerViewBuilder = RecyclerViewBuilderFactory(comicsRecyclerView)
+                .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
+                .bindViewItems(this, viewModel.comicsItemsObserver)
+                .setPaginationEnabled(true)
+                .onPaginate {
 
+                }
     }
 
     private fun setupObservers() {

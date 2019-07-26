@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.marvel.app.model.CharacterViewModel
 import com.marvel.app.reusable.viewmodels.CharactersViewModel
 import com.marvel.app.ui.character_details.CharacterDetailsActivity
-import com.marvel.app.ui.characters.viewitems.CharacterViewItemType
-import com.marvel.app.ui.characters.viewitems.FooterViewItem
+import com.marvel.app.reusable.viewitems.CharacterViewItemType
+import com.marvel.app.ui.characters.FooterViewItem
 import com.marvel.app.utilities.CompletableViewState
 import com.recyclerviewbuilder.library.RecyclerViewBuilder
 import com.recyclerviewbuilder.library.RecyclerViewBuilderFactory

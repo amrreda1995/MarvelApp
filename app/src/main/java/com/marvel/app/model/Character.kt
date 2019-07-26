@@ -3,8 +3,8 @@ package com.marvel.app.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.marvel.app.R
-import com.marvel.app.ui.characters.viewitems.CharacterViewItem
-import com.marvel.app.ui.characters.viewitems.CharacterViewItemType
+import com.marvel.app.reusable.viewitems.CharacterViewItem
+import com.marvel.app.reusable.viewitems.CharacterViewItemType
 import com.recyclerviewbuilder.library.AbstractViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 
@@ -24,10 +24,10 @@ data class Character(
             name = parcel.readString() ?: "",
             description = parcel.readString() ?: "",
             thumbnail = parcel.readParcelable(Thumbnail::class.java.classLoader),
-            comics = parcel.readParcelable(ComicItem::class.java.classLoader),
-            events = parcel.readParcelable(ComicItem::class.java.classLoader),
-            series = parcel.readParcelable(ComicItem::class.java.classLoader),
-            stories = parcel.readParcelable(ComicItem::class.java.classLoader)
+            comics = parcel.readParcelable(CharacterComic::class.java.classLoader),
+            events = parcel.readParcelable(CharacterComic::class.java.classLoader),
+            series = parcel.readParcelable(CharacterComic::class.java.classLoader),
+            stories = parcel.readParcelable(CharacterComic::class.java.classLoader)
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

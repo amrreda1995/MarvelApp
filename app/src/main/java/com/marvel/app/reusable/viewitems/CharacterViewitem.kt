@@ -1,5 +1,6 @@
-package com.marvel.app.ui.characters.viewitems
+package com.marvel.app.reusable.viewitems
 
+import android.util.Log
 import androidx.databinding.ViewDataBinding
 import com.marvel.app.databinding.ItemCharacter1Binding
 import com.marvel.app.databinding.ItemCharacter2Binding
@@ -25,5 +26,7 @@ class CharacterViewItem(
             binding.viewModel = viewModel
         else if (binding is ItemCharacter2Binding)
             binding.viewModel = viewModel
+
+        Log.d("okkk", viewModel.character.comics.items[0].resourceURI + "what!")
     }
 }

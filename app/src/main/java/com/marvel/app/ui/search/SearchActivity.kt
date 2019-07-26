@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import com.marvel.app.base.CharactersBaseActivity
-import com.marvel.app.ui.characters.viewitems.CharacterViewItemType
+import com.marvel.app.reusable.viewitems.CharacterViewItemType
 import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchActivity : CharactersBaseActivity() {

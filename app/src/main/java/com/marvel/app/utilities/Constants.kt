@@ -1,7 +1,5 @@
 package com.marvel.app.utilities
 
-import com.marvel.app.BuildConfig
-
 class Constants {
     companion object {
         const val baseURL = "https://gateway.marvel.com/v1/public/"

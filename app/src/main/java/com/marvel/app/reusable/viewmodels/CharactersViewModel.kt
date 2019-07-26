@@ -1,10 +1,11 @@
 package com.marvel.app.reusable.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.marvel.app.model.CharacterViewModel
 import com.marvel.app.repositories.CharactersRepoInterface
-import com.marvel.app.ui.characters.viewitems.CharacterViewItemType
+import com.marvel.app.reusable.viewitems.CharacterViewItemType
 import com.marvel.app.utilities.CompletableViewState
 import com.marvel.app.utilities.extensions.toArrayList
 import com.marvel.app.utilities.managers.ApiRequestManagerInterface

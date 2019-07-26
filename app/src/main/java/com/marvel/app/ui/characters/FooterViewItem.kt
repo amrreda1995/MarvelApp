@@ -1,4 +1,4 @@
-package com.marvel.app.ui.characters.viewitems
+package com.marvel.app.ui.characters
 
 import com.marvel.app.R
 import com.marvel.app.databinding.ItemFooterBinding

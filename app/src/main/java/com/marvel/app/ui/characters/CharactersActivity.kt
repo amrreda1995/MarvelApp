@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.marvel.app.R
 import com.marvel.app.base.CharactersBaseActivity
-import com.marvel.app.ui.characters.viewitems.CharacterViewItemType
+import com.marvel.app.reusable.viewitems.CharacterViewItemType
 import com.marvel.app.ui.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_characters.*
 
