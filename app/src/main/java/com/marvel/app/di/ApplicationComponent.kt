@@ -1,5 +1,6 @@
 package com.marvel.app.di
 
+import com.marvel.app.ui.character_details.CharacterDetailsActivity
 import com.marvel.app.ui.characters.CharactersActivity
 import com.marvel.app.ui.search.SearchActivity
 import dagger.Component
@@ -18,4 +19,5 @@ interface ApplicationComponent {
 
     fun inject(target: CharactersActivity)
     fun inject(target: SearchActivity)
+    fun inject(characterDetailsActivity: CharacterDetailsActivity)
 }

@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/characterNameTextView"
-            android:layout_width="160dp"
+            android:layout_width="180dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
@@ -35,8 +35,8 @@
             android:background="@drawable/parallelogram_bg"
             android:ellipsize="end"
             android:gravity="center"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:paddingStart="22dp"
+            android:paddingEnd="22dp"
             android:singleLine="true"
             android:text="@{viewModel.character.name}"
             android:textStyle="bold"
