@@ -3,6 +3,8 @@ package com.marvel.app.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.marvel.app.reusable.CharactersViewModel
+import com.marvel.app.ui.character_details.CharacterDetailsActivity
+import com.marvel.app.ui.character_details.CharacterDetailsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -29,4 +31,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CharactersViewModel::class)
     internal abstract fun bindCharactersViewModel(viewModel: CharactersViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CharacterDetailsViewModel::class)
+    internal abstract fun bindCharacterDetailsViewModel(viewModel: CharacterDetailsViewModel): ViewModel
 }
