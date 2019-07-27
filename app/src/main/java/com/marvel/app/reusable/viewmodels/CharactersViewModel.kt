@@ -72,6 +72,11 @@ class CharactersViewModel @Inject constructor(
     }
 
     private suspend fun saveCharactersToDatabase(characters: List<Character>) {
+        val charactersList = charactersLocalRepo.getSavedCharacter()
+        if (charactersList.isEmpty()) {
+            charactersLocalRepo.saveCharacter(Character())
+        }
+
         characters.forEach { charactersLocalRepo.saveCharacter(it) }
     }
 
