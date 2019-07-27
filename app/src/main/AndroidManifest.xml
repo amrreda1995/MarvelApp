@@ -15,14 +15,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.comic_images.ComicsActivity"></activity>
+        <activity android:name=".ui.comic_images.ComicsActivity"/>
+
         <activity
             android:name=".ui.search.SearchActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".ui.character_details.CharacterDetailsActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.characters.CharactersActivity"
             android:screenOrientation="portrait">

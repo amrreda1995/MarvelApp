@@ -1,4 +1,4 @@
-package com.marvel.app.repositories
+package com.marvel.app.repositories.remote
 
 import com.marvel.app.BuildConfig
 import com.marvel.app.model.ComicsResponse
@@ -25,7 +25,8 @@ interface CharacterDetailsRepoInterface {
     suspend fun getComics(@Url resourceUri: String): Response<ComicsResponse>
 }
 
-class CharacterDetailsRepo @Inject constructor(private val retrofit: Retrofit) : CharacterDetailsRepoInterface {
+class CharacterDetailsRepo @Inject constructor(private val retrofit: Retrofit) :
+    CharacterDetailsRepoInterface {
 
     override suspend fun getComics(resourceUri: String): Response<ComicsResponse> {
         val api = retrofit.create(CharacterDetailsApi::class.java)

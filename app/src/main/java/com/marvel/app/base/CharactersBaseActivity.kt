@@ -45,7 +45,11 @@ open class CharactersBaseActivity : BaseActivity() {
                         return@onPaginate
                     }
 
-                    viewModel.getCharacters(offset = ++currentOffset, characterViewItemType = characterViewItemType)
+                    viewModel.getCharacters(
+                            offset = ++currentOffset,
+                            characterViewItemType = characterViewItemType,
+                            clearsOnSet = false
+                    )
                 }
     }
 
@@ -69,6 +73,10 @@ open class CharactersBaseActivity : BaseActivity() {
                     loadingTextView.text = it.message.errorMessage
                 }
             }
+        })
+
+        viewModel.toggleRecyclerViewBuilderPagination.observe(this, Observer {
+            recyclerViewBuilder.setPaginationEnabled(it)
         })
     }
 

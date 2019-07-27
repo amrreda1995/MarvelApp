@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "charactersUrls")
 data class CharacterUrl(
-        @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
+        @PrimaryKey(autoGenerate = true) var ID: Long? = null,
         var type: String = "",
         var url: String = ""
 ) : Parcelable {

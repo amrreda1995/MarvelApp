@@ -23,7 +23,7 @@ open class CharactersActivity : CharactersBaseActivity() {
         setupListeners()
 
         recyclerViewBuilder.startLoading()
-        viewModel.getCharacters(characterViewItemType = CharacterViewItemType.VIEW_TYPE_1)
+        viewModel.getCharacters(characterViewItemType = CharacterViewItemType.VIEW_TYPE_1, clearsOnSet = true)
     }
 
     override fun setupListeners() {

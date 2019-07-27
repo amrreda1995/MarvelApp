@@ -1,4 +1,4 @@
-package com.marvel.app.repositories
+package com.marvel.app.repositories.remote
 
 import com.marvel.app.BuildConfig
 import com.marvel.app.model.CharactersResponse
@@ -29,11 +29,12 @@ interface CharactersApi {
     ): Response<CharactersResponse>
 }
 
-interface CharactersRepoInterface {
+interface CharactersRemoteRepoInterface {
     suspend fun getCharacters(searchByName: String? = null, offset: Int): Response<CharactersResponse>
 }
 
-class CharactersRepo @Inject constructor(private val retrofit: Retrofit) : CharactersRepoInterface {
+class CharactersRemoteRepo @Inject constructor(private val retrofit: Retrofit) :
+    CharactersRemoteRepoInterface {
 
     override suspend fun getCharacters(searchByName: String?, offset: Int): Response<CharactersResponse> {
         val api = retrofit.create(CharactersApi::class.java)

@@ -4,9 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.marvel.app.model.ComicItem
 import com.marvel.app.model.ComicItemViewModel
-import com.marvel.app.repositories.CharacterDetailsRepoInterface
+import com.marvel.app.repositories.remote.CharacterDetailsRepoInterface
 import com.marvel.app.utilities.managers.ApiRequestManagerInterface
-import com.marvel.app.utilities.managers.SharedPreferencesManagerInterface
 import com.recyclerviewbuilder.library.ViewItemsObserver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

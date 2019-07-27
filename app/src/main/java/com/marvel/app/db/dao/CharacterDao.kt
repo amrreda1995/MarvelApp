@@ -1,22 +1,21 @@
 package com.marvel.app.db.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
+import androidx.room.OnConflictStrategy.REPLACE
+import com.marvel.app.model.Character
 
-//@Dao
-//interface TopicsDao {
-//
-//    @Insert
-//    fun saveTopic(topic: Topic)
-//
-//    @Query("select * from topics where topicType=:topicType")
-//    fun getSavedTopics(topicType: String): List<Topic>
-//
-//    @Delete
-//    fun deleteTopic(topic: Topic)
-//
-//    @Query("delete from topics")
-//    fun deleteAllData()
-//}
+@Dao
+interface CharacterDao {
+
+    @Insert
+    fun saveCharacter(character: Character)
+
+    @Query("select * from characters")
+    fun getSavedCharacter(): List<Character>
+
+    @Delete
+    fun deleteCharacter(character: Character)
+
+    @Query("delete from characters")
+    fun deleteAllData()
+}

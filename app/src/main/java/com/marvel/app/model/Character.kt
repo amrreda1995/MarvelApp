@@ -2,6 +2,7 @@ package com.marvel.app.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.marvel.app.R
@@ -12,17 +13,17 @@ import com.recyclerviewbuilder.library.ViewItemRepresentable
 
 @Entity(tableName = "characters")
 data class Character(
-    @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
-    var id: Int = 0,
-    var name: String = "",
-    var description: String = "",
-    var thumbnail: Thumbnail = Thumbnail(),
-    var urls: List<CharacterUrl> = listOf(),
-    var comics: CharacterComics = CharacterComics(),
-    var events: CharacterComics = CharacterComics(),
-    var series: CharacterComics = CharacterComics(),
-    var stories: CharacterComics = CharacterComics()
-): Parcelable {
+        @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
+        var id: Int = 0,
+        var name: String = "",
+        var description: String = "",
+        var thumbnail: Thumbnail = Thumbnail(),
+        var urls: List<CharacterUrl> = listOf(),
+        var comics: CharacterComics = CharacterComics(),
+        var events: CharacterComics = CharacterComics(),
+        var series: CharacterComics = CharacterComics(),
+        var stories: CharacterComics = CharacterComics()
+) : Parcelable {
 
     constructor(parcel: Parcel) : this(
             id = parcel.readInt(),

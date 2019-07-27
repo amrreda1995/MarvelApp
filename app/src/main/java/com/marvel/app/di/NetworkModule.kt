@@ -1,5 +1,6 @@
 package com.marvel.app.di
 
+import android.content.Context
 import android.content.res.Resources
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -9,9 +10,7 @@ import com.marvel.app.BuildConfig
 import com.marvel.app.utilities.Constants
 import com.marvel.app.utilities.interceptors.CurlLoggingInterceptor
 import com.marvel.app.utilities.interceptors.ResponseLoggingInterceptor
-import com.marvel.app.utilities.managers.ApiRequestManager
-import com.marvel.app.utilities.managers.ApiRequestManagerInterface
-import com.marvel.app.utilities.managers.SharedPreferencesManagerInterface
+import com.marvel.app.utilities.managers.*
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -23,6 +22,12 @@ import javax.inject.Singleton
 
 @Module(includes = [ApplicationModule::class, SharedPreferencesModule::class])
 class NetworkModule {
+
+    @Provides
+    @Singleton
+    fun provideInternetConnectionManager(context: Context): InternetConnectionManagerInterface {
+        return InternetConnectionManager(context)
+    }
 
     @Provides
     @Singleton

@@ -8,9 +8,9 @@ import com.marvel.app.reusable.viewitems.ComicViewItem
 import com.recyclerviewbuilder.library.AbstractViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 
-@Entity(tableName = "comics")
+//@Entity(tableName = "comics")
 data class Comic(
-        @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
+//        @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
         var id: Int = 0,
         var title: String = "",
         var description: String = "",
