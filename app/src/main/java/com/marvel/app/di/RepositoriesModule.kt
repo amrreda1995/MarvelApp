@@ -2,6 +2,8 @@ package com.marvel.app.di
 
 import com.marvel.app.repositories.local.CharactersLocalRepo
 import com.marvel.app.repositories.local.CharactersLocalRepoInterface
+import com.marvel.app.repositories.local.ComicsLocalRepo
+import com.marvel.app.repositories.local.ComicsLocalRepoInterface
 import com.marvel.app.repositories.remote.CharacterDetailsRepo
 import com.marvel.app.repositories.remote.CharacterDetailsRepoInterface
 import com.marvel.app.repositories.remote.CharactersRemoteRepo
@@ -24,4 +26,8 @@ abstract class RepositoriesModule {
     @Binds
     @Singleton
     abstract fun bindCharactersLocalRepo(repo: CharactersLocalRepo): CharactersLocalRepoInterface
+
+    @Binds
+    @Singleton
+    abstract fun bindComicsLocalRepo(repo: ComicsLocalRepo): ComicsLocalRepoInterface
 }

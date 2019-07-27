@@ -29,7 +29,7 @@ class ComicFragment : Fragment() {
 
         viewModel?.let {
             rootView.comicImage.load(viewModel.comicImage)
-            rootView.titleTextView.text = viewModel.comicItem.name
+            rootView.titleTextView.text = viewModel.comicName
         }
 
         return rootView

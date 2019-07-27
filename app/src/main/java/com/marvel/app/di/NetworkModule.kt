@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
-@Module(includes = [ApplicationModule::class, SharedPreferencesModule::class])
+@Module(includes = [ApplicationModule::class])
 class NetworkModule {
 
     @Provides

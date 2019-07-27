@@ -9,9 +9,7 @@ import com.marvel.app.reusable.viewitems.ComicViewItem
 import com.recyclerviewbuilder.library.AbstractViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 
-@Entity(tableName = "comicsItems")
 data class ComicItem(
-        @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
         var name: String = "",
         @SerializedName("resourceURI")
         var resourceURI: String = ""
@@ -42,12 +40,19 @@ data class ComicItem(
     }
 }
 
+@Entity(tableName = "comics")
 class ComicItemViewModel(
-        val comicItem: ComicItem, var comicImage: String = ""
+        @PrimaryKey(autoGenerate = true) var _ID: Long = 0,
+        var id: Int = 0,
+        var characterId: Int = 0,
+        val comicName: String = "",
+        var comicImage: String = "",
+        var comicsType: String = ""
 ) : ViewItemRepresentable, Parcelable {
 
     constructor(parcel: Parcel) : this(
-            comicItem = parcel.readParcelable(ComicItem::class.java.classLoader),
+            id = parcel.readInt(),
+            comicName = parcel.readString() ?: "",
             comicImage = parcel.readString() ?: ""
     )
 
@@ -55,7 +60,8 @@ class ComicItemViewModel(
         get() = ComicViewItem(this)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeParcelable(comicItem, flags)
+        parcel.writeInt(id)
+        parcel.writeString(comicName)
         parcel.writeString(comicImage)
     }
 

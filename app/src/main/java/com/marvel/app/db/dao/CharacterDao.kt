@@ -10,7 +10,7 @@ interface CharacterDao {
     @Insert
     fun saveCharacter(character: Character)
 
-    @Query("select * from characters")
+    @Query("select * from characters where id <> 0")
     fun getSavedCharacter(): List<Character>
 
     @Delete

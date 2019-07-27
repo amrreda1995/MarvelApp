@@ -7,20 +7,23 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.marvel.app.db.converters.*
 import com.marvel.app.db.dao.CharacterDao
+import com.marvel.app.db.dao.ComicDao
 import com.marvel.app.model.Character
+import com.marvel.app.model.ComicItemViewModel
 
-@Database(entities = [Character::class], version = 1)
+@Database(entities = [Character::class, ComicItemViewModel::class], version = 1)
 @TypeConverters(
-    CharacterComicsConverter::class,
-    CharacterUrlConverter::class,
-    ComicItemConverter::class,
-    ComicItemsArrayListConverter::class,
-    ThumbnailConverter::class,
-    CharacterUrlArrayListConverter::class
+        CharacterComicsConverter::class,
+        CharacterUrlConverter::class,
+        ComicItemConverter::class,
+        ComicItemsArrayListConverter::class,
+        ThumbnailConverter::class,
+        CharacterUrlArrayListConverter::class
 )
 abstract class MarvelAppDatabase : RoomDatabase() {
 
     abstract fun characterDao(): CharacterDao
+    abstract fun comicDao(): ComicDao
 
     companion object {
         private const val dbName = "marvel.db"
@@ -31,9 +34,9 @@ abstract class MarvelAppDatabase : RoomDatabase() {
             if (dbInstance == null) {
                 synchronized(MarvelAppDatabase::class) {
                     dbInstance = Room.databaseBuilder(
-                        context.applicationContext,
-                        MarvelAppDatabase::class.java,
-                        dbName
+                            context.applicationContext,
+                            MarvelAppDatabase::class.java,
+                            dbName
                     ).build()
                 }
             }

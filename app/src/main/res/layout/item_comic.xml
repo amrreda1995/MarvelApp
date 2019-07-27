@@ -38,7 +38,7 @@
                 android:maxLines="1"
                 android:paddingStart="2dp"
                 android:paddingEnd="2dp"
-                android:text="@{viewModel.comicItem.name}"
+                android:text="@{viewModel.comicName}"
                 android:textColor="#fff"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

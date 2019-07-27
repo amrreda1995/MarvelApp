@@ -11,7 +11,7 @@ class ComicViewItem(
 ) : BindingViewItem<ViewItemRepresentable, ItemComicBinding>(R.layout.item_comic, viewModel) {
 
     override fun hashCode(): Int {
-        return viewModel.comicItem.resourceURI.hashCode()
+        return viewModel.id.hashCode()
     }
 
     override fun bind(binding: ItemComicBinding, viewItemPosition: Int) {

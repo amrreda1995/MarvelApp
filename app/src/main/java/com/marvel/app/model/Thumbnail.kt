@@ -2,12 +2,8 @@ package com.marvel.app.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity(tableName = "thumbnails")
 data class Thumbnail(
-        @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
         var extension: String = "",
         var path: String = ""
 ) : Parcelable {

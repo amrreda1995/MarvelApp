@@ -10,8 +10,7 @@ import javax.inject.Singleton
         modules = [
             ApplicationModule::class,
             RepositoriesModule::class,
-            ViewModelModule::class,
-            SharedPreferencesModule::class
+            ViewModelModule::class
         ]
 )
 @Singleton

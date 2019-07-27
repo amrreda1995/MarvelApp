@@ -53,10 +53,16 @@ class CharacterDetailsActivity : BaseActivity() {
         setupListeners()
         bindModelToViews()
 
-        viewModel.bindComicsOf(character.comics.items, withComicsItemsObserver = viewModel.comicsItemsObserver)
-        viewModel.bindComicsOf(character.events.items, withComicsItemsObserver = viewModel.eventsItemsObserver)
-        viewModel.bindComicsOf(character.stories.items, withComicsItemsObserver = viewModel.storiesItemsObserver)
-        viewModel.bindComicsOf(character.series.items, withComicsItemsObserver = viewModel.seriesItemsObserver)
+        viewModel.characterId = character.id
+
+        bindViews()
+    }
+
+    private fun bindViews() {
+        viewModel.bindComicsOf(character.comics.items, viewModel.comicsItemsObserver, ComicsType.COMICS)
+        viewModel.bindComicsOf(character.events.items, viewModel.eventsItemsObserver, ComicsType.EVENTS)
+        viewModel.bindComicsOf(character.stories.items, viewModel.storiesItemsObserver, ComicsType.STORIES)
+        viewModel.bindComicsOf(character.series.items, viewModel.seriesItemsObserver, ComicsType.SERIES)
     }
 
     private fun initViewModel() {

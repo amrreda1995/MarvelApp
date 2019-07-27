@@ -2,12 +2,8 @@ package com.marvel.app.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity(tableName = "charactersUrls")
 data class CharacterUrl(
-        @PrimaryKey(autoGenerate = true) var ID: Long? = null,
         var type: String = "",
         var url: String = ""
 ) : Parcelable {

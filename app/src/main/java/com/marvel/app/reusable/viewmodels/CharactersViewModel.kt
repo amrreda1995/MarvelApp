@@ -11,9 +11,7 @@ import com.marvel.app.reusable.viewitems.CharacterViewItemType
 import com.marvel.app.utilities.CompletableViewState
 import com.marvel.app.utilities.extensions.toArrayList
 import com.marvel.app.utilities.managers.ApiRequestManagerInterface
-import com.marvel.app.utilities.managers.InternetConnectionManager
 import com.marvel.app.utilities.managers.InternetConnectionManagerInterface
-import com.marvel.app.utilities.managers.SharedPreferencesManagerInterface
 import com.recyclerviewbuilder.library.ViewItemsObserver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +21,6 @@ import javax.inject.Inject
 
 class CharactersViewModel @Inject constructor(
         private val apiRequestManager: ApiRequestManagerInterface,
-        private val sharedPreferencesManager: SharedPreferencesManagerInterface,
         private val charactersRemoteRepo: CharactersRemoteRepoInterface,
         private val charactersLocalRepo: CharactersLocalRepoInterface,
         private val internetConnectionManager: InternetConnectionManagerInterface
