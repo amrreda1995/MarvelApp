@@ -1,10 +1,8 @@
-package com.marvel.app.ui.comic_images
+package com.marvel.app.ui.comics_preview
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Ignore
 import com.marvel.app.R
 import com.marvel.app.base.BaseActivity
 import com.marvel.app.model.ComicItemViewModel
@@ -14,10 +12,10 @@ import com.marvel.app.utilities.extensions.toArrayList
 import com.marvel.app.utilities.managers.ApiRequestManagerInterface
 import com.recyclerviewbuilder.library.RecyclerViewBuilder
 import com.recyclerviewbuilder.library.RecyclerViewBuilderFactory
-import kotlinx.android.synthetic.main.activity_comics.*
+import kotlinx.android.synthetic.main.activity_comics_preview.*
 import javax.inject.Inject
 
-class ComicsActivity : BaseActivity() {
+class ComicsPreviewActivity : BaseActivity() {
 
     @Inject
     lateinit var apiRequestManager: ApiRequestManagerInterface
@@ -37,7 +35,7 @@ class ComicsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         component.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_comics)
+        setContentView(R.layout.activity_comics_preview)
 
         viewModels = intent.extras!!.getParcelableArrayList("viewModels")
         position = intent.extras!!.getInt("position")

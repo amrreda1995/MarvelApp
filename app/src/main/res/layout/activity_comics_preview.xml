@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".ui.comic_images.ComicsActivity">
+    tools:context=".ui.comics_preview.ComicsPreviewActivity">
 
     <ImageButton
         android:id="@+id/closeButton"

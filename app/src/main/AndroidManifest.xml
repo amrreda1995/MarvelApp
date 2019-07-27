@@ -15,7 +15,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.comic_images.ComicsActivity"/>
+        <activity
+            android:name=".ui.comics_preview.ComicsPreviewActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.search.SearchActivity"

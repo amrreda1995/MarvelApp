@@ -3,8 +3,6 @@ package com.marvel.app.ui.character_details
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Parcelable
-import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -16,7 +14,7 @@ import com.marvel.app.model.Character
 import com.marvel.app.model.ComicItemViewModel
 import com.marvel.app.model.ComicItemViewType
 import com.marvel.app.reusable.viewitems.ComicViewItem
-import com.marvel.app.ui.comic_images.ComicsActivity
+import com.marvel.app.ui.comics_preview.ComicsPreviewActivity
 import com.marvel.app.utilities.extensions.toArrayList
 import com.marvel.app.utilities.extensions.toast
 import com.recyclerviewbuilder.library.BaseAdapterInterface
@@ -118,7 +116,7 @@ class CharacterDetailsActivity : BaseActivity() {
         val viewModels = getViewModelsOf(recyclerView)
 
         startActivity(
-                Intent(this, ComicsActivity::class.java)
+                Intent(this, ComicsPreviewActivity::class.java)
                         .putParcelableArrayListExtra("viewModels", viewModels)
                         .putExtra("position", position)
         )
