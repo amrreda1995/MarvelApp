@@ -1,29 +1,29 @@
 package com.marvel.app.reusable.viewitems
 
-import com.marvel.app.R
-import com.marvel.app.databinding.ItemComicBinding
+import android.view.View
+import android.widget.ImageView
 import com.marvel.app.model.ComicImageSetter
 import com.marvel.app.model.ComicItemViewModel
 import com.marvel.app.utilities.extensions.load
-import com.recyclerviewbuilder.library.BindingViewItem
+import com.recyclerviewbuilder.library.ViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
+import kotlinx.android.synthetic.main.layout_comic_image.view.*
+import kotlinx.android.synthetic.main.layout_comic_title.view.*
 
 class ComicViewItem(
         val viewModel: ComicItemViewModel
-) : BindingViewItem<ViewItemRepresentable, ItemComicBinding>(R.layout.item_comic, viewModel), ComicImageSetter {
+) : ViewItem<ViewItemRepresentable>(viewModel.layoutResource, viewModel), ComicImageSetter {
 
-    private lateinit var binding: ItemComicBinding
+    private lateinit var comicImageView: ImageView
 
     override fun hashCode(): Int {
         return viewModel.resourceURI.hashCode()
     }
 
-    override fun bind(binding: ItemComicBinding, viewItemPosition: Int) {
-        this.binding = binding
+    override fun bind(itemView: View, viewItemPosition: Int) {
+        comicImageView = itemView.comicImageView
 
-        binding.comicImageView.setImageBitmap(null)
-
-        binding.viewModel = viewModel
+        itemView.titleTextView.text = viewModel.comicName
 
         viewModel.setComicImageSetter(this)
 
@@ -31,6 +31,6 @@ class ComicViewItem(
     }
 
     override fun setComicImage(comicImage: String) {
-        binding.comicImageView.load(comicImage)
+        comicImageView.load(comicImage)
     }
 }

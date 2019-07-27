@@ -17,13 +17,13 @@
         android:background="#272B2E"
         android:padding="4dp"
         android:src="@drawable/ic_action_close"
-        app:layout_constraintBottom_toTopOf="@+id/viewPager"
+        app:layout_constraintBottom_toTopOf="@+id/comicsRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comicsRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
@@ -46,5 +46,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+        app:layout_constraintTop_toBottomOf="@+id/comicsRecyclerView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

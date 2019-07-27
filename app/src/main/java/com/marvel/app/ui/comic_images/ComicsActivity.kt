@@ -1,22 +1,41 @@
 package com.marvel.app.ui.comic_images
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Ignore
 import com.marvel.app.R
+import com.marvel.app.base.BaseActivity
 import com.marvel.app.model.ComicItemViewModel
+import com.marvel.app.repositories.local.ComicsLocalRepoInterface
+import com.marvel.app.repositories.remote.CharacterDetailsRepoInterface
+import com.marvel.app.utilities.extensions.toArrayList
+import com.marvel.app.utilities.managers.ApiRequestManagerInterface
+import com.recyclerviewbuilder.library.RecyclerViewBuilder
+import com.recyclerviewbuilder.library.RecyclerViewBuilderFactory
 import kotlinx.android.synthetic.main.activity_comics.*
+import javax.inject.Inject
 
-class ComicsActivity : AppCompatActivity() {
+class ComicsActivity : BaseActivity() {
+
+    @Inject
+    lateinit var apiRequestManager: ApiRequestManagerInterface
+
+    @Inject
+    lateinit var characterDetailsRepo: CharacterDetailsRepoInterface
+
+    @Inject
+    lateinit var comicsLocalRepo: ComicsLocalRepoInterface
 
     private lateinit var viewModels: ArrayList<ComicItemViewModel>
 
-    private lateinit var adapter: ViewPagerAdapter
+    private lateinit var recyclerViewBuilder: RecyclerViewBuilder
 
     private var position = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comics)
 
@@ -25,56 +44,43 @@ class ComicsActivity : AppCompatActivity() {
 
         numbersTextView.text = "${position + 1}/${viewModels.size}"
 
-        setupViewPager()
+        initRecyclerViewBuilder()
         setupListeners()
+
+        recyclerViewBuilder.scrollTo(position, false)
     }
 
-    private fun setupViewPager() {
-        adapter = ViewPagerAdapter(supportFragmentManager)
-
-        val fragmentsList = ArrayList<Fragment>()
-
-        addItemsToFragmentsList(fragmentsList)
-
-        adapter.setFragments(fragmentsList)
-
-        viewPager.adapter = adapter
-
-        viewPager.offscreenPageLimit = fragmentsList.size
-
-        setupViewPagerChangedPagesListener()
-
-        viewPager.currentItem = position
-    }
-
-    private fun addItemsToFragmentsList(fragmentsList: ArrayList<Fragment>) {
-        viewModels.forEach {
-            val bundle = Bundle()
-            bundle.putParcelable("viewModel", it)
-            val fragment = ComicFragment()
-            fragment.arguments = bundle
-
-            fragmentsList.add(fragment)
-        }
-    }
-
-    private fun setupViewPagerChangedPagesListener() {
-        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                numbersTextView.text = "${position + 1}/${viewModels.size}"
-            }
-        })
+    private fun initRecyclerViewBuilder() {
+        recyclerViewBuilder = RecyclerViewBuilderFactory(comicsRecyclerView)
+                .buildWithLinearLayout(orientation = RecyclerView.HORIZONTAL)
+                .setViewItems(viewModels.map {
+                    val comicViewModel
+                            = ComicItemViewModel(
+                            characterId = it.characterId,
+                            resourceURI = it.resourceURI,
+                            comicName = it.comicName,
+                            comicImage = it.comicImage,
+                            comicsType = it.comicsType,
+                            comicItemViewType = it.comicItemViewType,
+                            apiRequestManager = apiRequestManager,
+                            characterDetailsRepo = characterDetailsRepo,
+                            comicsLocalRepo = comicsLocalRepo
+                    )
+                    comicViewModel.viewItem
+                }.toArrayList())
     }
 
     private fun setupListeners() {
         closeButton.setOnClickListener {
             finish()
         }
+
+        comicsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val position = (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+
+                numbersTextView.text = "${position + 1}/${viewModels.size}"
+            }
+        })
     }
 }

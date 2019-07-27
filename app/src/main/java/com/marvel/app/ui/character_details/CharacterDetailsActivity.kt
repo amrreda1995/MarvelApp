@@ -14,6 +14,7 @@ import com.marvel.app.base.BaseActivity
 import com.marvel.app.databinding.ActivityCharacterDetailsBinding
 import com.marvel.app.model.Character
 import com.marvel.app.model.ComicItemViewModel
+import com.marvel.app.model.ComicItemViewType
 import com.marvel.app.reusable.viewitems.ComicViewItem
 import com.marvel.app.ui.comic_images.ComicsActivity
 import com.marvel.app.utilities.extensions.toArrayList
@@ -71,22 +72,22 @@ class CharacterDetailsActivity : BaseActivity() {
 
     private fun initRecyclerViewBuilders() {
         comicsRecyclerViewBuilder = RecyclerViewBuilderFactory(comicsRecyclerView)
-                .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
+                .buildWithLinearLayout(orientation = RecyclerView.HORIZONTAL)
                 .setEmptyView(comicsNoItemsTextView)
                 .bindViewItems(this, viewModel.comicsItemsObserver)
 
         eventsRecyclerViewBuilder = RecyclerViewBuilderFactory(eventsRecyclerView)
-                .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
+                .buildWithLinearLayout(orientation = RecyclerView.HORIZONTAL)
                 .setEmptyView(eventsNoItemsTextView)
                 .bindViewItems(this, viewModel.eventsItemsObserver)
 
         storiesRecyclerViewBuilder = RecyclerViewBuilderFactory(storiesRecyclerView)
-                .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
+                .buildWithLinearLayout(orientation = RecyclerView.HORIZONTAL)
                 .setEmptyView(storiesNoItemsTextView)
                 .bindViewItems(this, viewModel.storiesItemsObserver)
 
         seriesRecyclerViewBuilder = RecyclerViewBuilderFactory(seriesRecyclerView)
-                .buildWithLinearLayout(isDataBindingEnabled = true, orientation = RecyclerView.HORIZONTAL)
+                .buildWithLinearLayout(orientation = RecyclerView.HORIZONTAL)
                 .setEmptyView(seriesNoItemsTextView)
                 .bindViewItems(this, viewModel.seriesItemsObserver)
     }
@@ -125,7 +126,9 @@ class CharacterDetailsActivity : BaseActivity() {
 
     private fun getViewModelsOf(recyclerView: RecyclerView): ArrayList<ComicItemViewModel> {
         return (recyclerView.adapter as BaseAdapterInterface).viewItemsArrayList.map {
-            (it as ComicViewItem).viewModel
+            val viewModel = (it as ComicViewItem).viewModel
+            viewModel.comicItemViewType = ComicItemViewType.COMIC_ITEM_2.value
+            viewModel
         }.toArrayList()
     }
 
