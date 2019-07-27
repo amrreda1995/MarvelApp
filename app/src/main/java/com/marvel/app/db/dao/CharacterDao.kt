@@ -18,4 +18,7 @@ interface CharacterDao {
 
     @Query("delete from characters")
     fun deleteAllData()
+
+    @Query("select * from characters where name like :characterName and id <> 0")
+    fun searchForCharactersBy(characterName: String): List<Character>
 }

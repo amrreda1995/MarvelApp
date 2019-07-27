@@ -64,7 +64,12 @@ class CharactersViewModel @Inject constructor(
             )
         } else {
             toggleRecyclerViewBuilderPagination.value = false
-            getCharactersFromDatabase(characterViewItemType, clearsOnSet)
+
+            searchByName?.let {
+                searchForCharactersBy(it)
+            } ?: run {
+                getCharactersFromDatabase(characterViewItemType, clearsOnSet)
+            }
         }
     }
 
@@ -97,6 +102,16 @@ class CharactersViewModel @Inject constructor(
     private suspend fun deleteAllData() {
         CoroutineScope(Dispatchers.IO).launch {
             charactersLocalRepo.deleteAllData()
+        }
+    }
+
+    private fun searchForCharactersBy(characterName: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val characters = charactersLocalRepo.searchForCharactersBy(characterName)
+
+            withContext(Dispatchers.Main) {
+                bindCharactersToRecyclerView(characters, CharacterViewItemType.VIEW_TYPE_2, true)
+            }
         }
     }
 

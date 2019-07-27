@@ -11,6 +11,7 @@ interface CharactersLocalRepoInterface {
     suspend fun getSavedCharacter(): List<Character>
     suspend fun deleteCharacter(character: Character)
     suspend fun deleteAllData()
+    suspend fun searchForCharactersBy(characterName: String): List<Character>
 }
 
 class CharactersLocalRepo @Inject constructor(context: Context) : CharactersLocalRepoInterface {
@@ -36,5 +37,13 @@ class CharactersLocalRepo @Inject constructor(context: Context) : CharactersLoca
 
     override suspend fun deleteAllData() {
         characterDao?.deleteAllData()
+    }
+
+    override suspend fun searchForCharactersBy(characterName: String): List<Character> {
+        characterDao?.let {
+            return it.searchForCharactersBy(characterName)
+        } ?: run {
+            return listOf()
+        }
     }
 }

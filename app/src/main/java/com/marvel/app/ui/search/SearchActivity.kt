@@ -17,7 +17,7 @@ class SearchActivity : CharactersBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         component.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(com.marvel.app.R.layout.activity_search)
+        setContentView(R.layout.activity_search)
 
         characterViewItemType = CharacterViewItemType.VIEW_TYPE_2
 
@@ -48,15 +48,17 @@ class SearchActivity : CharactersBaseActivity() {
             private var delayed = false
 
             override fun afterTextChanged(s: Editable?) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    if (!delayed) {
-                        delayed = true
-                        delay(1500)
+                if (s.toString().isNotEmpty()) {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        if (!delayed) {
+                            delayed = true
+                            delay(1500)
 
-                        withContext(Dispatchers.Main) {
-                            delayed = false
+                            withContext(Dispatchers.Main) {
+                                delayed = false
 
-                            getCharacters()
+                                getCharacters()
+                            }
                         }
                     }
                 }
