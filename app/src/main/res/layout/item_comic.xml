@@ -21,7 +21,6 @@
             android:layout_width="140dp"
             android:layout_height="190dp"
             android:scaleType="fitXY"
-            android:src="@{viewModel.comicImage}"
             app:layout_constraintBottom_toTopOf="@+id/textView13"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

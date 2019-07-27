@@ -11,6 +11,7 @@ interface ComicsLocalRepoInterface {
     suspend fun getSavedComics(characterId: Int, comicsType: String): List<ComicItemViewModel>
     suspend fun deleteComic(comicItemViewModel: ComicItemViewModel)
     suspend fun deleteAllData(characterId: Int, comicsType: String)
+    suspend fun updateComic(resourceURI: String, comicImage: String)
 }
 
 class ComicsLocalRepo @Inject constructor(context: Context) : ComicsLocalRepoInterface {
@@ -36,5 +37,9 @@ class ComicsLocalRepo @Inject constructor(context: Context) : ComicsLocalRepoInt
 
     override suspend fun deleteAllData(characterId: Int, comicsType: String) {
         comicDao?.deleteAllData(characterId, comicsType)
+    }
+
+    override suspend fun updateComic(resourceURI: String, comicImage: String) {
+        comicDao?.updateComic(resourceURI, comicImage)
     }
 }

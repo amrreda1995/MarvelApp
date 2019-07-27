@@ -41,69 +41,49 @@ class CharacterDetailsViewModel @Inject constructor(
             withComicsItemsObserver: MutableLiveData<ViewItemsObserver>,
             comicsType: ComicsType
     ) {
+
         if (internetConnectionManager.isConnectedToInternet) {
-            CoroutineScope(Dispatchers.IO).launch {
 
-                deleteAllData(comicsType.value)
+            deleteAllData(comicsType.value)
 
-                if (items.isNotEmpty()) {
-                    items.forEach {
-                        getComicDataBy(it, withComicsItemsObserver, comicsType)
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        withComicsItemsObserver.value = ViewItemsObserver()
-                    }
-                }
-            }
+            saveComicToDatabase(items, comicsType)
+
+            withComicsItemsObserver.value = ViewItemsObserver(
+                    items.map {
+                        ComicItemViewModel(
+                                characterId = characterId,
+                                comicName = it.name,
+                                resourceURI = it.resourceURI,
+                                comicsType = comicsType.value,
+                                apiRequestManager = apiRequestManager,
+                                characterDetailsRepo = characterDetailsRepo,
+                                comicsLocalRepo = comicsLocalRepo
+                        ).viewItem
+                    }.toArrayList()
+            )
         } else {
             getComicsFromDatabase(withComicsItemsObserver, comicsType)
         }
     }
 
-    private suspend fun getComicDataBy(
-            comicItem: ComicItem,
-            withComicsItemsObserver: MutableLiveData<ViewItemsObserver>,
-            comicsType: ComicsType
-    ) {
+    private fun saveComicToDatabase(items: List<ComicItem>, comicsType: ComicsType) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val comicsList = comicsLocalRepo.getSavedComics(characterId, comicsType.value)
+            if (comicsList.isEmpty()) {
+                comicsLocalRepo.saveComic(ComicItemViewModel())
+            }
 
-        apiRequestManager.execute(
-                request = {
-                    characterDetailsRepo.getComics(comicItem.resourceURI)
-                },
-                onSuccess = { response, headers ->
-                    val comicItemViewModel = ComicItemViewModel(
-                            id = response.data.results[0].id,
-                            characterId = characterId,
-                            comicName = comicItem.name,
-                            comicsType = comicsType.value
-                    )
-
-                    if (response.data.results.isNotEmpty()) {
-                        response.data.results[0].thumbnail?.let {
-                            comicItemViewModel.comicImage =
-                                    "${it.path}.${it.extension}"
-                        } ?: run {
-                            comicItemViewModel.comicImage = "https://www.wildhareboca.com/wp-content/uploads/sites/310/2018/03/image-not-available.jpg"
-                        }
-                    }
-
-                    CoroutineScope(Dispatchers.IO).launch {
-                        saveComicToDatabase(comicItemViewModel, comicsType)
-                    }
-
-                    withComicsItemsObserver.value = ViewItemsObserver(arrayListOf(comicItemViewModel.viewItem))
-                }
-        )
-    }
-
-    private suspend fun saveComicToDatabase(comicItemViewModel: ComicItemViewModel, comicsType: ComicsType) {
-        val comicsList = comicsLocalRepo.getSavedComics(characterId, comicsType.value)
-        if (comicsList.isEmpty()) {
-            comicsLocalRepo.saveComic(ComicItemViewModel())
+            items.forEach {
+                comicsLocalRepo.saveComic(
+                        ComicItemViewModel(
+                                characterId = characterId,
+                                comicName = it.name,
+                                resourceURI = it.resourceURI,
+                                comicsType = comicsType.value
+                        )
+                )
+            }
         }
-
-        comicsLocalRepo.saveComic(comicItemViewModel)
     }
 
     private fun getComicsFromDatabase(withComicsItemsObserver: MutableLiveData<ViewItemsObserver>, comicsType: ComicsType) {
@@ -124,7 +104,7 @@ class CharacterDetailsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun deleteAllData(comicsType: String) {
+    private fun deleteAllData(comicsType: String) {
         CoroutineScope(Dispatchers.IO).launch {
             comicsLocalRepo.deleteAllData(characterId, comicsType)
         }

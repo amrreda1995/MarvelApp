@@ -3,11 +3,19 @@ package com.marvel.app.model
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.marvel.app.repositories.local.ComicsLocalRepoInterface
+import com.marvel.app.repositories.remote.CharacterDetailsRepoInterface
 import com.marvel.app.reusable.viewitems.ComicViewItem
+import com.marvel.app.utilities.extensions.load
+import com.marvel.app.utilities.managers.ApiRequestManagerInterface
 import com.recyclerviewbuilder.library.AbstractViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 data class ComicItem(
         var name: String = "",
@@ -42,16 +50,21 @@ data class ComicItem(
 
 @Entity(tableName = "comics")
 class ComicItemViewModel(
-        @PrimaryKey(autoGenerate = true) var _ID: Long = 0,
-        var id: Int = 0,
+        @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
         var characterId: Int = 0,
-        val comicName: String = "",
+        var resourceURI: String = "",
+        var comicName: String = "",
         var comicImage: String = "",
-        var comicsType: String = ""
+        var comicsType: String = "",
+        @Ignore private val apiRequestManager: ApiRequestManagerInterface? = null,
+        @Ignore private val characterDetailsRepo: CharacterDetailsRepoInterface? = null,
+        @Ignore private val comicsLocalRepo: ComicsLocalRepoInterface? = null
 ) : ViewItemRepresentable, Parcelable {
 
+    @Ignore private var comicImageSetter: ComicImageSetter? = null
+
     constructor(parcel: Parcel) : this(
-            id = parcel.readInt(),
+            resourceURI = parcel.readString() ?: "",
             comicName = parcel.readString() ?: "",
             comicImage = parcel.readString() ?: ""
     )
@@ -60,7 +73,7 @@ class ComicItemViewModel(
         get() = ComicViewItem(this)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
+        parcel.writeString(resourceURI)
         parcel.writeString(comicName)
         parcel.writeString(comicImage)
     }
@@ -78,4 +91,51 @@ class ComicItemViewModel(
             return arrayOfNulls(size)
         }
     }
+
+    fun setComicImageSetter(comicImageSetter: ComicImageSetter) {
+        this.comicImageSetter = comicImageSetter
+    }
+
+    fun setComicItemImage() {
+        if (comicImage.isEmpty()) {
+            getComicData()
+        } else {
+            comicImageSetter?.setComicImage(comicImage)
+        }
+    }
+
+    private fun getComicData() {
+
+        characterDetailsRepo?.let {
+            apiRequestManager?.execute(
+                    request = {
+                        characterDetailsRepo.getComics(resourceURI)
+                    },
+                    onSuccess = { response, headers ->
+
+                        if (response.data.results.isNotEmpty()) {
+                            response.data.results[0].thumbnail?.let {
+                                comicImage = "${it.path}.${it.extension}"
+                            } ?: run {
+                                comicImage = "https://www.wildhareboca.com/wp-content/uploads/sites/310/2018/03/image-not-available.jpg"
+                            }
+                        }
+
+                        comicImageSetter?.setComicImage(comicImage)
+
+                        updateComicIndDatabase()
+                    }
+            )
+        }
+    }
+
+    private fun updateComicIndDatabase() {
+        CoroutineScope(Dispatchers.IO).launch {
+            comicsLocalRepo?.updateComic(resourceURI, comicImage)
+        }
+    }
+}
+
+interface ComicImageSetter {
+    fun setComicImage(comicImage: String)
 }
