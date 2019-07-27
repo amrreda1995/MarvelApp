@@ -2,11 +2,15 @@ package com.marvel.app.ui.search
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import com.marvel.app.R
 import com.marvel.app.base.CharactersBaseActivity
 import com.marvel.app.reusable.viewitems.CharacterViewItemType
 import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.coroutines.*
 
 class SearchActivity : CharactersBaseActivity() {
 
@@ -39,6 +43,29 @@ class SearchActivity : CharactersBaseActivity() {
 
             bool
         }
+
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            private var delayed = false
+
+            override fun afterTextChanged(s: Editable?) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    if (!delayed) {
+                        delayed = true
+                        delay(1500)
+
+                        withContext(Dispatchers.Main) {
+                            delayed = false
+
+                            getCharacters()
+                        }
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
         cancelButton.setOnClickListener {
             finish()
