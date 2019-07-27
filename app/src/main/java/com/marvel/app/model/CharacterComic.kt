@@ -2,8 +2,14 @@ package com.marvel.app.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-data class CharacterComic(var items: List<ComicItem> = listOf()) : Parcelable {
+@Entity(tableName = "charactersComic")
+data class CharacterComic(
+        @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
+        var items: List<ComicItem> = listOf()
+) : Parcelable {
 
     constructor(parcel: Parcel) : this(
             items = parcel.createTypedArrayList(ComicItem.CREATOR)

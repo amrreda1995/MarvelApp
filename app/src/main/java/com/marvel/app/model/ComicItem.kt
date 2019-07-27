@@ -2,12 +2,16 @@ package com.marvel.app.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.marvel.app.reusable.viewitems.ComicViewItem
 import com.recyclerviewbuilder.library.AbstractViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 
+@Entity(tableName = "comicsItems")
 data class ComicItem(
+        @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
         var name: String = "",
         @SerializedName("resourceURI")
         var resourceURI: String = ""

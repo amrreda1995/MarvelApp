@@ -2,13 +2,17 @@ package com.marvel.app.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.marvel.app.R
 import com.marvel.app.reusable.viewitems.CharacterViewItem
 import com.marvel.app.reusable.viewitems.CharacterViewItemType
 import com.recyclerviewbuilder.library.AbstractViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
 
+@Entity(tableName = "characters")
 data class Character(
+        @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
         var id: Int = 0,
         var name: String = "",
         var description: String = "",
