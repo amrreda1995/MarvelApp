@@ -12,16 +12,16 @@ import com.recyclerviewbuilder.library.ViewItemRepresentable
 
 @Entity(tableName = "characters")
 data class Character(
-        @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
-        var id: Int = 0,
-        var name: String = "",
-        var description: String = "",
-        var thumbnail: Thumbnail = Thumbnail(),
-        var urls: List<CharacterUrl> = listOf(),
-        var comics: CharacterComic = CharacterComic(),
-        var events: CharacterComic = CharacterComic(),
-        var series: CharacterComic = CharacterComic(),
-        var stories: CharacterComic = CharacterComic()
+    @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
+    var id: Int = 0,
+    var name: String = "",
+    var description: String = "",
+    var thumbnail: Thumbnail = Thumbnail(),
+    var urls: List<CharacterUrl> = listOf(),
+    var comics: CharacterComics = CharacterComics(),
+    var events: CharacterComics = CharacterComics(),
+    var series: CharacterComics = CharacterComics(),
+    var stories: CharacterComics = CharacterComics()
 ): Parcelable {
 
     constructor(parcel: Parcel) : this(
@@ -30,10 +30,10 @@ data class Character(
             description = parcel.readString() ?: "",
             thumbnail = parcel.readParcelable(Thumbnail::class.java.classLoader),
             urls = parcel.createTypedArrayList(CharacterUrl.CREATOR),
-            comics = parcel.readParcelable(CharacterComic::class.java.classLoader),
-            events = parcel.readParcelable(CharacterComic::class.java.classLoader),
-            series = parcel.readParcelable(CharacterComic::class.java.classLoader),
-            stories = parcel.readParcelable(CharacterComic::class.java.classLoader)
+            comics = parcel.readParcelable(CharacterComics::class.java.classLoader),
+            events = parcel.readParcelable(CharacterComics::class.java.classLoader),
+            series = parcel.readParcelable(CharacterComics::class.java.classLoader),
+            stories = parcel.readParcelable(CharacterComics::class.java.classLoader)
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

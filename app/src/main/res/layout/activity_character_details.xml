@@ -109,14 +109,14 @@
                     android:layout_marginTop="4dp">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/comicsRecyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                            android:id="@+id/comicsRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="230dp"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:id="@+id/comicsNoItemsTextView"
@@ -137,7 +137,7 @@
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:text="Series"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp" />
@@ -148,14 +148,14 @@
                     android:layout_marginTop="4dp">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/seriesRecyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                            android:id="@+id/seriesRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="230dp"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:id="@+id/seriesNoItemsTextView"
@@ -176,7 +176,7 @@
                     android:id="@+id/textView7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:text="Stories"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp" />
@@ -187,14 +187,14 @@
                     android:layout_marginTop="4dp">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/storiesRecyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                            android:id="@+id/storiesRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="230dp"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:id="@+id/storiesNoItemsTextView"
@@ -215,7 +215,7 @@
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:text="Events"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp" />
@@ -226,14 +226,14 @@
                     android:layout_marginTop="4dp">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/eventsRecyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                            android:id="@+id/eventsRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="230dp"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:id="@+id/eventsNoItemsTextView"

@@ -48,11 +48,3 @@ data class Comic(
         }
     }
 }
-
-//class ComicViewModel(val comic: Comic) : ViewItemRepresentable {
-//
-//    val comicImage = "${comic.thumbnail.path}.${comic.thumbnail.extension}"
-//
-//    override val viewItem: AbstractViewItem<ViewItemRepresentable>
-//        get() = ComicViewItem(this)
-//}

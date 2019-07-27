@@ -5,8 +5,8 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "charactersComic")
-data class CharacterComic(
+@Entity(tableName = "charactersComics")
+data class CharacterComics(
         @PrimaryKey(autoGenerate = true) var _ID: Long? = null,
         var items: List<ComicItem> = listOf()
 ) : Parcelable {
@@ -23,12 +23,12 @@ data class CharacterComic(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<CharacterComic> {
-        override fun createFromParcel(parcel: Parcel): CharacterComic {
-            return CharacterComic(parcel)
+    companion object CREATOR : Parcelable.Creator<CharacterComics> {
+        override fun createFromParcel(parcel: Parcel): CharacterComics {
+            return CharacterComics(parcel)
         }
 
-        override fun newArray(size: Int): Array<CharacterComic?> {
+        override fun newArray(size: Int): Array<CharacterComics?> {
             return arrayOfNulls(size)
         }
     }
