@@ -54,7 +54,7 @@ data class ComicItem(
 }
 
 @Entity(tableName = "comics")
-class ComicItemViewModel(
+open class ComicItemViewModel(
         @PrimaryKey(autoGenerate = true) var _ID: Long = 0,
         var characterId: Int = 0,
         var resourceURI: String = "",

@@ -41,7 +41,6 @@ class CharacterDetailsViewModel @Inject constructor(
             withComicsItemsObserver: MutableLiveData<ViewItemsObserver>,
             comicsType: ComicsType
     ) {
-
         if (internetConnectionManager.isConnectedToInternet) {
 
             deleteAllData(comicsType.value)
