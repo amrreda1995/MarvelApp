@@ -2,7 +2,6 @@ package com.marvel.app.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.lifecycle.MutableLiveData
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
@@ -61,15 +60,18 @@ open class ComicItemViewModel(
         var comicName: String = "",
         var comicImage: String = "",
         var comicsType: String = "",
+        @Ignore var isGettingComicData: Boolean = false,
         @Ignore var comicItemViewType: Int = ComicItemViewType.COMIC_ITEM_1.value,
         @Ignore private val apiRequestManager: ApiRequestManagerInterface? = null,
         @Ignore private val characterDetailsRepo: CharacterDetailsRepoInterface? = null,
         @Ignore private val comicsLocalRepo: ComicsLocalRepoInterface? = null
 ) : ViewItemRepresentable, Parcelable {
 
-    @Ignore private var comicImageSetter: ComicImageSetter? = null
+    @Ignore
+    private var comicImageSetter: ComicImageSetter? = null
 
-    @Ignore val layoutResource = if (comicItemViewType == ComicItemViewType.COMIC_ITEM_1.value) {
+    @Ignore
+    val layoutResource = if (comicItemViewType == ComicItemViewType.COMIC_ITEM_1.value) {
         R.layout.item_comic_1
     } else {
         R.layout.item_comic_2
@@ -114,7 +116,10 @@ open class ComicItemViewModel(
 
     fun setComicItemImage() {
         if (comicImage.isEmpty()) {
-            getComicData()
+            if (!isGettingComicData) {
+                isGettingComicData = true
+                getComicData()
+            }
         } else {
             comicImageSetter?.setComicImage(comicImage)
         }
@@ -128,6 +133,8 @@ open class ComicItemViewModel(
                         characterDetailsRepo.getComics(resourceURI)
                     },
                     onSuccess = { response, headers ->
+
+                        isGettingComicData = false
 
                         if (response.data.results.isNotEmpty()) {
                             response.data.results[0].thumbnail?.let {
