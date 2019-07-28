@@ -38,7 +38,6 @@ class ApiRequestManager(private val resources: Resources) : ApiRequestManagerInt
                     }
                 }
             } catch (e: Exception) {
-//                Log.e("hhh", e.message)
                 withContext(Dispatchers.Main) {
                     onFailure?.invoke(Message(resources.getString(R.string.some_error_happened)))
                 }
