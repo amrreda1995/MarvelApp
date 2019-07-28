@@ -147,6 +147,9 @@ open class ComicItemViewModel(
                         comicImageSetter?.setComicImage(comicImage)
 
                         updateComicIndDatabase()
+                    },
+                    onFailure = {
+                        isGettingComicData = false
                     }
             )
         }
