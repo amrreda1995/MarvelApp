@@ -2,12 +2,12 @@ package com.marvel.app.reusable.viewitems
 
 import android.view.View
 import android.widget.ImageView
-import com.bumptech.glide.Glide
+import com.marvel.app.R
 import com.marvel.app.model.ComicImageSetter
 import com.marvel.app.model.ComicItemViewModel
-import com.marvel.app.utilities.extensions.load
 import com.recyclerviewbuilder.library.ViewItem
 import com.recyclerviewbuilder.library.ViewItemRepresentable
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_comic_image.view.*
 import kotlinx.android.synthetic.main.layout_comic_title.view.*
 
@@ -30,10 +30,15 @@ class ComicViewItem(
 
         itemView.titleTextView.text = viewModel.comicName
 
-        viewModel.setComicItemImage()
+        if (viewModel.comicImage.isEmpty()) {
+            Picasso.get().load(R.drawable.loading).into(itemView.comicImageView)
+            viewModel.getComicData()
+        } else {
+            setComicImage(viewModel.comicImage)
+        }
     }
 
     override fun setComicImage(comicImage: String) {
-        comicImageView.load(comicImage)
+        Picasso.get().load(comicImage).into(comicImageView)
     }
 }

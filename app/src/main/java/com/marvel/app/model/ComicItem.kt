@@ -114,22 +114,14 @@ open class ComicItemViewModel(
         this.comicImageSetter = comicImageSetter
     }
 
-    fun setComicItemImage() {
-        if (comicImage.isEmpty()) {
-            if (!isLoadingComicImage) {
-                isLoadingComicImage = true
-                getComicData()
-            }
-        } else {
-            comicImageSetter?.setComicImage(comicImage)
-        }
-    }
+    fun getComicData() {
+        if (!isLoadingComicImage) {
+            isLoadingComicImage = true
 
-    private fun getComicData() {
-
-        characterDetailsRepo?.let {
-            apiRequestManager?.execute(
+            characterDetailsRepo?.let {
+                apiRequestManager?.execute(
                     request = {
+
                         characterDetailsRepo.getComics(resourceURI)
                     },
                     onSuccess = { response, headers ->
@@ -151,7 +143,8 @@ open class ComicItemViewModel(
                     onFailure = {
                         isLoadingComicImage = false
                     }
-            )
+                )
+            }
         }
     }
 
