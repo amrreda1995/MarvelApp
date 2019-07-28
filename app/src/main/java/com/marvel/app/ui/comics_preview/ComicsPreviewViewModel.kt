@@ -20,6 +20,7 @@ class ComicsPreviewViewModel @Inject constructor(
     val comicsViewItemsObserver = MutableLiveData<ViewItemsObserver>()
 
     fun setComicsViewModels(viewModels: ArrayList<ComicItemViewModel>) {
+
         comicsViewItemsObserver.value = ViewItemsObserver(
                 viewModels.map {
                     val comicViewModel
