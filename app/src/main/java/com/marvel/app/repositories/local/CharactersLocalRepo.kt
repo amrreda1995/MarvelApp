@@ -14,7 +14,7 @@ interface CharactersLocalRepoInterface {
     suspend fun searchForCharactersBy(characterName: String): List<Character>
 }
 
-open class CharactersLocalRepo @Inject constructor(context: Context) : CharactersLocalRepoInterface {
+class CharactersLocalRepo @Inject constructor(context: Context) : CharactersLocalRepoInterface {
 
     private val marvelDatabase = MarvelAppDatabase.getInstance(context)
     private val characterDao = marvelDatabase?.characterDao()
