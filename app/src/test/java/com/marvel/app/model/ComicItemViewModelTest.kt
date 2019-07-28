@@ -24,7 +24,7 @@ class ComicItemViewModelTest {
     }
 
     @Test
-    fun bindComicImageIfNotEmpty() {
+    fun testBindComicImageIfNotEmpty() {
         comicItemViewModel.comicImage = "test"
 
         comicItemViewModel.setComicItemImage()

@@ -48,17 +48,15 @@ class SearchActivity : CharactersBaseActivity() {
             private var delayed = false
 
             override fun afterTextChanged(s: Editable?) {
-                if (s.toString().isNotEmpty()) {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        if (!delayed) {
-                            delayed = true
-                            delay(1500)
+                CoroutineScope(Dispatchers.IO).launch {
+                    if (!delayed) {
+                        delayed = true
+                        delay(1500)
 
-                            withContext(Dispatchers.Main) {
-                                delayed = false
+                        withContext(Dispatchers.Main) {
+                            delayed = false
 
-                                getCharacters()
-                            }
+                            getCharacters()
                         }
                     }
                 }

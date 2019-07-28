@@ -29,31 +29,34 @@ interface CharactersApi {
     ): Response<CharactersResponse>
 }
 
-interface CharactersRemoteRepoInterface {
-    suspend fun getCharacters(searchByName: String? = null, offset: Int): Response<CharactersResponse>
+open interface CharactersRemoteRepoInterface {
+    suspend fun getCharactersBy(name: String, offset: Int): Response<CharactersResponse>
+    suspend fun getCharacters(offset: Int): Response<CharactersResponse>
 }
 
 class CharactersRemoteRepo @Inject constructor(private val retrofit: Retrofit) :
     CharactersRemoteRepoInterface {
 
-    override suspend fun getCharacters(searchByName: String?, offset: Int): Response<CharactersResponse> {
+    private val api = retrofit.create(CharactersApi::class.java)
+
+    override suspend fun getCharactersBy(name: String, offset: Int): Response<CharactersResponse> {
+        return api.getCharacters(
+            BuildConfig.TS,
+            BuildConfig.MARVEL_API_PUBLIC_KEY,
+            BuildConfig.HASH_KEY,
+            name,
+            offset
+        )
+    }
+
+    override suspend fun getCharacters(offset: Int): Response<CharactersResponse> {
         val api = retrofit.create(CharactersApi::class.java)
 
-        searchByName?.let {
-            return api.getCharacters(
-                    BuildConfig.TS,
-                    BuildConfig.MARVEL_API_PUBLIC_KEY,
-                    BuildConfig.HASH_KEY,
-                    it,
-                    offset
-            )
-        } ?: run {
-            return api.getCharacters(
-                    BuildConfig.TS,
-                    BuildConfig.MARVEL_API_PUBLIC_KEY,
-                    BuildConfig.HASH_KEY,
-                    offset
-            )
-        }
+        return api.getCharacters(
+            BuildConfig.TS,
+            BuildConfig.MARVEL_API_PUBLIC_KEY,
+            BuildConfig.HASH_KEY,
+            offset
+        )
     }
 }

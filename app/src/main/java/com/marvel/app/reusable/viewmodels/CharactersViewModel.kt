@@ -19,11 +19,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class CharactersViewModel @Inject constructor(
-        private val apiRequestManager: ApiRequestManagerInterface,
+open class CharactersViewModel @Inject constructor(
+        var apiRequestManager: ApiRequestManagerInterface,
         private val charactersRemoteRepo: CharactersRemoteRepoInterface,
         private val charactersLocalRepo: CharactersLocalRepoInterface,
-        private val internetConnectionManager: InternetConnectionManagerInterface
+        var internetConnectionManager: InternetConnectionManagerInterface
 ) : ViewModel() {
 
     val characterViewItemsObserver = MutableLiveData<ViewItemsObserver>()
@@ -39,28 +39,33 @@ class CharactersViewModel @Inject constructor(
             characterViewItemType: CharacterViewItemType
     ) {
         if (internetConnectionManager.isConnectedToInternet) {
+
             apiRequestManager.execute(
-                    request = {
-                        charactersRemoteRepo.getCharacters(searchByName, offset)
-                    },
-                    onSuccess = { response, _ ->
-                        pagesCount.value = response.data.total
+                request = {
+                    searchByName?.let {
+                        charactersRemoteRepo.getCharactersBy(searchByName, offset)
+                    } ?: run {
+                        charactersRemoteRepo.getCharacters(offset)
+                    }
+                },
+                onSuccess = { response, _ ->
+                    pagesCount.value = response.data.total
 
-                        bindCharactersToRecyclerView(response.data.results, characterViewItemType, clearsOnSet)
+                    bindCharactersToRecyclerView(response.data.results, characterViewItemType, clearsOnSet)
 
-                        CoroutineScope(Dispatchers.IO).launch {
-                            if (clearsOnSet) {
-                                deleteAllData()
-                            }
-
-                            saveCharactersToDatabase(response.data.results)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        if (clearsOnSet) {
+                            deleteAllData()
                         }
 
-                        charactersViewState.value = CompletableViewState.Completed
-                    },
-                    onFailure = {
-                        charactersViewState.value = CompletableViewState.Error(it)
+                        saveCharactersToDatabase(response.data.results)
                     }
+
+                    charactersViewState.value = CompletableViewState.Completed
+                },
+                onFailure = {
+                    charactersViewState.value = CompletableViewState.Error(it)
+                }
             )
         } else {
             toggleRecyclerViewBuilderPagination.value = false
