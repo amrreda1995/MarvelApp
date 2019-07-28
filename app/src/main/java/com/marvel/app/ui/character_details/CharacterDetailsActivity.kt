@@ -117,7 +117,7 @@ class CharacterDetailsActivity : BaseActivity() {
 
         startActivity(
                 Intent(this, ComicsPreviewActivity::class.java)
-                        .putParcelableArrayListExtra("viewModels", viewModels)
+                        .putParcelableArrayListExtra("comicsViewModels", viewModels)
                         .putExtra("position", position)
         )
     }

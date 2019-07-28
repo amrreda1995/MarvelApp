@@ -2,6 +2,7 @@ package com.marvel.app.reusable.viewitems
 
 import android.view.View
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.marvel.app.model.ComicImageSetter
 import com.marvel.app.model.ComicItemViewModel
 import com.marvel.app.utilities.extensions.load
@@ -20,12 +21,16 @@ class ComicViewItem(
         return viewModel.resourceURI.hashCode()
     }
 
+    init {
+        viewModel.setComicImageSetter(this)
+    }
+
     override fun bind(itemView: View, viewItemPosition: Int) {
         comicImageView = itemView.comicImageView
 
-        itemView.titleTextView.text = viewModel.comicName
+        Glide.with(comicImageView.context).clear(comicImageView)
 
-        viewModel.setComicImageSetter(this)
+        itemView.titleTextView.text = viewModel.comicName
 
         viewModel.setComicItemImage()
     }

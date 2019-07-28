@@ -33,8 +33,10 @@ class SearchActivity : CharactersBaseActivity() {
         searchEditText.setOnEditorActionListener { v, actionId, event ->
             val bool = if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
-                getCharacters()
-                closeKeypad()
+                if (searchEditText.toString().trim().isNotEmpty()) {
+                    getCharacters()
+                    closeKeypad()
+                }
 
                 true
             } else {
@@ -56,7 +58,9 @@ class SearchActivity : CharactersBaseActivity() {
                         withContext(Dispatchers.Main) {
                             delayed = false
 
-                            getCharacters()
+                            if (s.toString().trim().isNotEmpty()) {
+                                getCharacters()
+                            }
                         }
                     }
                 }
@@ -79,7 +83,7 @@ class SearchActivity : CharactersBaseActivity() {
         startRecyclerViewBuilderLoading()
         viewModel.getCharacters(
                 characterViewItemType = characterViewItemType,
-                searchByName = searchEditText.text.toString(),
+                searchByName = searchEditText.text.toString().trim(),
                 clearsOnSet = true
         )
     }

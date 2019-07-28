@@ -53,13 +53,11 @@ open class CharactersViewModel @Inject constructor(
 
                     bindCharactersToRecyclerView(response.data.results, characterViewItemType, clearsOnSet)
 
-                    CoroutineScope(Dispatchers.IO).launch {
-                        if (clearsOnSet) {
-                            deleteAllData()
-                        }
-
-                        saveCharactersToDatabase(response.data.results)
+                    if (clearsOnSet) {
+                        deleteAllData()
                     }
+
+                    saveCharactersToDatabase(response.data.results)
 
                     charactersViewState.value = CompletableViewState.Completed
                 },
@@ -78,13 +76,15 @@ open class CharactersViewModel @Inject constructor(
         }
     }
 
-    private suspend fun saveCharactersToDatabase(characters: List<Character>) {
-        val charactersList = charactersLocalRepo.getSavedCharacter()
-        if (charactersList.isEmpty()) {
-            charactersLocalRepo.saveCharacter(Character())
-        }
+    private fun saveCharactersToDatabase(characters: List<Character>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val charactersList = charactersLocalRepo.getSavedCharacter()
+            if (charactersList.isEmpty()) {
+                charactersLocalRepo.saveCharacter(Character())
+            }
 
-        characters.forEach { charactersLocalRepo.saveCharacter(it) }
+            characters.forEach { charactersLocalRepo.saveCharacter(it) }
+        }
     }
 
     private fun getCharactersFromDatabase(
@@ -104,7 +104,7 @@ open class CharactersViewModel @Inject constructor(
         }
     }
 
-    private suspend fun deleteAllData() {
+    private fun deleteAllData() {
         CoroutineScope(Dispatchers.IO).launch {
             charactersLocalRepo.deleteAllData()
         }

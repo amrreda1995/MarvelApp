@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.marvel.app.reusable.viewmodels.CharactersViewModel
 import com.marvel.app.ui.character_details.CharacterDetailsViewModel
+import com.marvel.app.ui.comics_preview.ComicsPreviewViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -35,4 +36,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CharacterDetailsViewModel::class)
     internal abstract fun bindCharacterDetailsViewModel(viewModel: CharacterDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ComicsPreviewViewModel::class)
+    internal abstract fun bindComicsPreviewViewModel(viewModel: ComicsPreviewViewModel): ViewModel
 }
