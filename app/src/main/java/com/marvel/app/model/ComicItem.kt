@@ -60,7 +60,7 @@ open class ComicItemViewModel(
         var comicName: String = "",
         var comicImage: String = "",
         var comicsType: String = "",
-        @Ignore var isGettingComicData: Boolean = false,
+        @Ignore var isLoadingComicImage: Boolean = false,
         @Ignore var comicItemViewType: Int = ComicItemViewType.COMIC_ITEM_1.value,
         @Ignore private val apiRequestManager: ApiRequestManagerInterface? = null,
         @Ignore private val characterDetailsRepo: CharacterDetailsRepoInterface? = null,
@@ -116,8 +116,8 @@ open class ComicItemViewModel(
 
     fun setComicItemImage() {
         if (comicImage.isEmpty()) {
-            if (!isGettingComicData) {
-                isGettingComicData = true
+            if (!isLoadingComicImage) {
+                isLoadingComicImage = true
                 getComicData()
             }
         } else {
@@ -134,7 +134,7 @@ open class ComicItemViewModel(
                     },
                     onSuccess = { response, headers ->
 
-                        isGettingComicData = false
+                        isLoadingComicImage = false
 
                         if (response.data.results.isNotEmpty()) {
                             response.data.results[0].thumbnail?.let {
@@ -149,7 +149,7 @@ open class ComicItemViewModel(
                         updateComicIndDatabase()
                     },
                     onFailure = {
-                        isGettingComicData = false
+                        isLoadingComicImage = false
                     }
             )
         }

@@ -28,8 +28,6 @@ class ComicViewItem(
     override fun bind(itemView: View, viewItemPosition: Int) {
         comicImageView = itemView.comicImageView
 
-        Glide.with(comicImageView.context).clear(comicImageView)
-
         itemView.titleTextView.text = viewModel.comicName
 
         viewModel.setComicItemImage()
