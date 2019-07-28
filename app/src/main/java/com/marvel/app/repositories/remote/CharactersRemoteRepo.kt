@@ -29,7 +29,7 @@ interface CharactersApi {
     ): Response<CharactersResponse>
 }
 
-open interface CharactersRemoteRepoInterface {
+interface CharactersRemoteRepoInterface {
     suspend fun getCharactersBy(name: String, offset: Int): Response<CharactersResponse>
     suspend fun getCharacters(offset: Int): Response<CharactersResponse>
 }
