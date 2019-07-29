@@ -41,7 +41,7 @@ class CharactersLocalRepo @Inject constructor(context: Context) : CharactersLoca
 
     override suspend fun searchForCharactersBy(characterName: String): List<Character> {
         characterDao?.let {
-            return it.searchForCharactersBy(characterName)
+            return it.searchForCharactersBy(characterName).distinctBy { it.id }
         } ?: run {
             return listOf()
         }
