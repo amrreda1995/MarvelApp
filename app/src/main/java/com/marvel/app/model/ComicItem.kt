@@ -85,7 +85,7 @@ open class ComicItemViewModel(
             comicItemViewType = parcel.readInt()
     )
 
-    override val viewItem: AbstractViewItem<ViewItemRepresentable>
+    override val viewItem: AbstractViewItem
         get() = ComicViewItem(this)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

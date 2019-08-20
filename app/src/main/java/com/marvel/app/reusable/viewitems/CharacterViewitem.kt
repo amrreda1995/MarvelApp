@@ -13,7 +13,7 @@ enum class CharacterViewItemType {
 
 class CharacterViewItem(
     private val viewModel: CharacterViewModel
-) : BindingViewItem<ViewItemRepresentable, ViewDataBinding>(viewModel.layoutResource, viewModel) {
+) : BindingViewItem<ViewDataBinding>(viewModel.layoutResource, viewModel) {
 
     override fun hashCode(): Int {
         return viewModel.character.id

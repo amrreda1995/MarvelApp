@@ -77,6 +77,6 @@ class CharacterViewModel(
 
     val characterImage = "${character.thumbnail.path}.${character.thumbnail.extension}"
 
-    override val viewItem: AbstractViewItem<ViewItemRepresentable>
+    override val viewItem: AbstractViewItem
         get() = CharacterViewItem(this)
 }

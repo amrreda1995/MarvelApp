@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.layout_comic_title.view.*
 
 class ComicViewItem(
         val viewModel: ComicItemViewModel
-) : ViewItem<ViewItemRepresentable>(viewModel.layoutResource, viewModel), ComicImageSetter {
+) : ViewItem(viewModel.layoutResource, viewModel), ComicImageSetter {
 
     private lateinit var comicImageView: ImageView
 
