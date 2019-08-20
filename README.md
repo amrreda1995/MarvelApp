@@ -19,7 +19,4 @@ Marvel app is built over:
 
 | Screenshot #1 | Screenshot #2 | Screenshot #3 | Screenshot #4 |
 | ---- | ---- | ---- | ---- |
-| <img src="https://i.ibb.co/2NvhKFw/1.png" width="250"/>
-| <img src="https://i.ibb.co/HNM2NXB/2.png" width="250"/>
-| <img src="https://i.ibb.co/0s1LL1M/3.png" width="250"/>
-| <img src="https://i.ibb.co/KwLd47t/4.png" width="250"/> |
+| <img src="https://i.ibb.co/2NvhKFw/1.png" width="250"/> | <img src="https://i.ibb.co/HNM2NXB/2.png" width="250"/> | <img src="https://i.ibb.co/0s1LL1M/3.png" width="250"/> | <img src="https://i.ibb.co/KwLd47t/4.png" width="250"/> |
