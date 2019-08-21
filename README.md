@@ -8,6 +8,7 @@ Marvel app is built over:
 * DataBinding
 * Room
 * LiveData
+* Retrofit2
 * Singleton design pattern
 * Delegate design pattern
 * Builder design pattern
