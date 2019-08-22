@@ -1,5 +1,5 @@
 # MarvelApp
-Marvel app is built over:
+Full mobile app is built over:
 
 * Kotlin
 * Coroutines
