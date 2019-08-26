@@ -1,5 +1,5 @@
 # MarvelApp
-Marvel app is built over:
+Full mobile app is built over:
 
 * Kotlin
 * Coroutines
@@ -8,12 +8,13 @@ Marvel app is built over:
 * DataBinding
 * Room
 * LiveData
+* Retrofit2
 * Singleton design pattern
 * Delegate design pattern
 * Builder design pattern
 * Factory design pattern
 * SOLID principles
-* RecyclerViewBuilder which you can check it through my repository [here](https://github.com/amrreda1995/recyclerview-builder)
+* RecyclerViewBuilder library which you can check it through my repository [here](https://github.com/amrreda1995/recyclerview-builder)
 
 ## Screenshots
 
