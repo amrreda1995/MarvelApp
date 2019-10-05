@@ -3,6 +3,7 @@ package com.marvel.app.ui.comics_preview
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.marvel.app.R
 import com.marvel.app.base.BaseActivity
@@ -42,6 +43,8 @@ class ComicsPreviewActivity : BaseActivity() {
     }
 
     private fun initRecyclerViewBuilder() {
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(comicsRecyclerView)
         recyclerViewBuilder = RecyclerViewBuilderFactory(comicsRecyclerView)
                 .buildWithLinearLayout(orientation = RecyclerView.HORIZONTAL)
                 .bindViewItems(this, viewModel.comicsViewItemsObserver)
